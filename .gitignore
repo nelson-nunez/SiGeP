@@ -1,3 +1,7 @@
 SiGeP/.vs/
 SiGeP/SiGeP/obj/
 SiGeP/SiGeP/bin/
+SiGeP/SiGeP.API/obj/
+SiGeP/SiGeP.Business/obj/
+SiGeP/SiGeP.DataAccess/obj/
+SiGeP/SiGeP.Model/obj/
