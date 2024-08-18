@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SiGeP.Model.Model;
+using SiGeP.Model.ModelUser;
 
 namespace SiGeP.Model
 {

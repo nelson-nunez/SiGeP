@@ -1,6 +1,6 @@
 ﻿using SiGeP.DataAccess.Generic;
 using SiGeP.Model;
-using SiGeP.Model.Model;
+using SiGeP.Model.ModelUser;
 
 namespace SiGeP.DataAccess.Repositories
 {

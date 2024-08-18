@@ -30,7 +30,7 @@ namespace SiGeP.Business
         public async Task<IEnumerable<Customer>> GetListAsync(string sellerName)
         {
             IEnumerable<Customer> list = new List<Customer>();
-            list = await unitOfWork.AddRepositories.CustomerRepository.GetListAsync(x => x.Name.ToUpper().Contains(sellerName.ToUpper()));
+            list = await unitOfWork.AddRepositories.CustomerRepository.GetListAsync(x => x.Person.Name.ToUpper().Contains(sellerName.ToUpper()));
             return list;
         }
 

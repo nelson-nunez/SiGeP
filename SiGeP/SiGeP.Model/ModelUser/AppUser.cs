@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using SiGeP.Model.Base;
 
-namespace SiGeP.Model.Model
+namespace SiGeP.Model.ModelUser
 {
     public class AppUser : BaseEntity
     {
@@ -11,5 +11,8 @@ namespace SiGeP.Model.Model
 
         [Column(TypeName = "VARCHAR"), StringLength(128)]
         public string Password { get; set; }
+
+        public int RoleId { get; set; }
+        public virtual Role Role { get; set; }
     }
 }

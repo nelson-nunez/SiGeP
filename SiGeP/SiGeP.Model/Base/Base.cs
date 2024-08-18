@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
 
 namespace SiGeP.Model.Base
 {
@@ -25,5 +26,13 @@ namespace SiGeP.Model.Base
         public DateTime? Created { get; set; }
         public DateTime? Updated { get; set; }
         public DateTime? Deleted { get; set; }
+
+        public bool IsNew
+        {
+            get
+            {
+                return Id.Equals(0);
+            }
+        }
     }
 }
