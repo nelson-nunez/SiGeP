@@ -15,10 +15,12 @@ namespace SiGeP.Model.Base
 
         [Column(TypeName = "VARCHAR"), StringLength(64)]
         public string CreatedBy { get; set; }
+
         [Column(TypeName = "VARCHAR"), StringLength(64)]
-        public string UpdatedBy { get; set; }
+        public string UpdatedBy { get; set; } = string.Empty; // Valor por defecto
+
         [Column(TypeName = "VARCHAR"), StringLength(64)]
-        public string DeletedBy { get; set; }
+        public string DeletedBy { get; set; } = string.Empty; // Valor por defecto
 
         public DateTime? Created { get; set; }
         public DateTime? Updated { get; set; }

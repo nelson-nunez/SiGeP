@@ -13,13 +13,13 @@ namespace SiGeP.Business
 
         public async Task<IEnumerable<Gender>> GetAsync()
         {
-            return await unitOfWork.Repositories.GenderRepository.GetAsync();
+            return await unitOfWork.AddRepositories.GenderRepository.GetAsync();
         }
 
         public async Task<IEnumerable<Gender>> GetListAsync(string name)
         {
             IEnumerable<Gender> list = new List<Gender>();
-            list = await unitOfWork.Repositories.GenderRepository.GetListAsync(x => x.Name.ToUpper().Contains(name.ToUpper()));
+            list = await unitOfWork.AddRepositories.GenderRepository.GetListAsync(x => x.Name.ToUpper().Contains(name.ToUpper()));
             return list;
         }
     }

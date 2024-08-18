@@ -18,19 +18,19 @@ namespace SiGeP.Business
 
         public async Task<Customer> FindAsync(int id)
         {
-            return await unitOfWork.Repositories.CustomerRepository.FindAsync(id);
+            return await unitOfWork.AddRepositories.CustomerRepository.FindAsync(id);
         }
 
 
         public async Task<IEnumerable<Customer>> GetAsync()
         {
-            return await unitOfWork.Repositories.CustomerRepository.GetAsync();
+            return await unitOfWork.AddRepositories.CustomerRepository.GetAsync();
         }
 
         public async Task<IEnumerable<Customer>> GetListAsync(string sellerName)
         {
             IEnumerable<Customer> list = new List<Customer>();
-            list = await unitOfWork.Repositories.CustomerRepository.GetListAsync(x => x.Name.ToUpper().Contains(sellerName.ToUpper()));
+            list = await unitOfWork.AddRepositories.CustomerRepository.GetListAsync(x => x.Name.ToUpper().Contains(sellerName.ToUpper()));
             return list;
         }
 
@@ -45,7 +45,7 @@ namespace SiGeP.Business
             //                   .Where(x => x.DocumentTypeId == DocumentType.CuitTypeId)
             //                   .Any(y => y.DocumentNumber.Contains(cuit)));
 
-            var pagedDataResult = await unitOfWork.Repositories.CustomerRepository.GetPagedResultAsync(request.FilterBy, request.FilterValue, filter, request.OrderBy, request.PageSize, request.PageIndex);
+            var pagedDataResult = await unitOfWork.AddRepositories.CustomerRepository.GetPagedResultAsync(request.FilterBy, request.FilterValue, filter, request.OrderBy, request.PageSize, request.PageIndex);
             return pagedDataResult;
         }
 
@@ -59,11 +59,11 @@ namespace SiGeP.Business
 
                 if (entity.Id == 0)
                 {
-                    await unitOfWork.Repositories.CustomerRepository.AddAsync(entity);
+                    await unitOfWork.AddRepositories.CustomerRepository.AddAsync(entity);
                 }
                 else
                 {
-                    unitOfWork.Repositories.CustomerRepository.Update(entity);
+                    unitOfWork.AddRepositories.CustomerRepository.Update(entity);
                 }
                 await unitOfWork.CompleteAsync();
                 return entity.Id;
@@ -80,7 +80,7 @@ namespace SiGeP.Business
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var customerToDelete = await unitOfWork.Repositories.CustomerRepository.FindAsync(id);
+            var customerToDelete = await unitOfWork.AddRepositories.CustomerRepository.FindAsync(id);
             unitOfWork.Delete(customerToDelete);
             await unitOfWork.CompleteAsync();
             return true;

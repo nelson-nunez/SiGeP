@@ -12,7 +12,7 @@ namespace SiGeP.Business
 
         public async Task Authenticate(string userName, string password)
         {
-            var users = await unitOfWork.Repositories.AppUserRepository.GetAsync(x => x.Name == userName & x.Password == password);
+            var users = await unitOfWork.AddRepositories.AppUserRepository.GetAsync(x => x.Name == userName & x.Password == password);
             if (users.Count() != 1)
                 throw new Exception("Credenciales inválidas");
         }

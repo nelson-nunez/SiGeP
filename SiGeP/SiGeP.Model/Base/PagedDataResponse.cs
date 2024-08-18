@@ -8,8 +8,8 @@ namespace SiGeP.Model.Base
 {
     public class PagedDataResponse<T> where T : class
     {
-        //public PagedDataResponse()
-        //{ }
+        public PagedDataResponse()
+        { }
         public PagedDataResponse(int pageIndex, int pageSize, int rowCount, IList<T> result)
         {
             this.PageSize = pageSize == 0 ? rowCount : pageSize;

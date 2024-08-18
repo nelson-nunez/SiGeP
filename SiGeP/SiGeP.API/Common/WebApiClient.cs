@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Text;
 using System.Web;
 using SiGeP.API.Common.Model;
+using SiGeP.Model.BaseDTO;
 
 namespace SiGeP.API.Common
 {
@@ -155,7 +156,8 @@ namespace SiGeP.API.Common
 
             if (response.IsSuccessStatusCode)
             {
-                dynamic result = Newtonsoft.Json.JsonConvert.DeserializeObject(response.Content.ReadAsStringAsync().Result);
+                //dynamic result = Newtonsoft.Json.JsonConvert.DeserializeObject(response.Content.ReadAsStringAsync().Result);
+                dynamic result = JsonSerializer.Deserialize<object>(response.Content.ReadAsStringAsync().Result);
                 return result;
             }
             else
@@ -178,7 +180,8 @@ namespace SiGeP.API.Common
 
             if (response.IsSuccessStatusCode)
             {
-                dynamic result = Newtonsoft.Json.JsonConvert.DeserializeObject(response.Content.ReadAsStringAsync().Result);
+                //dynamic result = Newtonsoft.Json.JsonConvert.DeserializeObject(response.Content.ReadAsStringAsync().Result);
+                dynamic result = JsonSerializer.Deserialize<object>(response.Content.ReadAsStringAsync().Result);
                 return result;
             }
             else

@@ -18,8 +18,8 @@ INICIANDO PROYECTO
 12- Crear un seed para algunos objetos iniciales requeridos. 
 13- Crear migraciones (Referenciar el proyecto en los comandos si son varios)
 	https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/projects?tabs=vs
-	Add-Migration NewMigration -Project BaseRest.Core.Model
-	Update-Database -Project BaseRest.Core.Model
+	Add-Migration NewMigration -Project SiGeP.Model
+	Update-Database -Project SiGeP.Model
 
 	CAPA DATA ACCESS (designpattern):
 14 - Crear Capa UnitOf work (es un patron de diseño que abstrae el acceso a los datos de la la logica den)

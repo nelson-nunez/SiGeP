@@ -73,53 +73,6 @@ namespace SiGeP.Model
                 SeedAppUser(modelBuilder);
             }
         }
-        private static void SeedCustomer(ModelBuilder modelBuilder)
-        {
-
-            var customers = new List<Customer>();
-
-            for (int i = 1; i <= 40; i++)
-            {
-                customers.Add(new Customer
-                {
-                    Id = i,
-                    Name = $"Customer {i}",
-                    BirthDate = DateTime.Now.AddYears(-30).AddMonths(i),
-                    CUIL = "12345678910",
-                    GenderId = 1,
-                    Phone = "364412345678",
-                    Created = DateTime.Now,
-                });
-            }
-
-            // Agregar los objetos Customer al modelBuilder utilizando HasData
-            foreach (var customer in customers)
-            {
-                modelBuilder.Entity<Customer>().HasData(customer);
-            }
-        }
-        private static void SeedGender(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Gender>().HasData(
-            new Gender
-            {
-                Id = 1,
-                Name = "Femenino",
-                Created = DateTime.Now,
-            },
-            new Gender
-            {
-                Id = 2,
-                Name = "Masculino",
-                Created = DateTime.Now,
-            },
-            new Gender
-            {
-                Id = 3,
-                Name = "Otro",
-                Created = DateTime.Now,
-            });
-        }
         private static void SeedAppUser(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AppUser>().HasData(
@@ -128,7 +81,104 @@ namespace SiGeP.Model
                 Id = 1,
                 Name = "admin",
                 Password = "admin",
+                CreatedBy = "System",   // Asignar valor a CreatedBy
+                Created = DateTime.Now,
             });
         }
+
+        private static void SeedCustomer(ModelBuilder modelBuilder)
+        {
+            var customers = new List<Customer>
+            {
+                new Customer
+                {
+                    Id = 1,
+                    Name = "Juan Pérez",
+                    BirthDate = new DateTime(1985, 5, 15),
+                    CUIL = "20123456789",
+                    GenderId = 1, // Masculino
+                    Phone = "1234567890",
+                    CreatedBy = "System",
+                    Created = DateTime.Now,
+                },
+                new Customer
+                {
+                    Id = 2,
+                    Name = "María López",
+                    BirthDate = new DateTime(1990, 3, 22),
+                    CUIL = "20234567890",
+                    GenderId = 2, // Femenino
+                    Phone = "0987654321",
+                    CreatedBy = "System",
+                    Created = DateTime.Now,
+                },
+                new Customer
+                {
+                    Id = 3,
+                    Name = "Carlos García",
+                    BirthDate = new DateTime(1982, 7, 30),
+                    CUIL = "20345678901",
+                    GenderId = 1, // Masculino
+                    Phone = "1122334455",
+                    CreatedBy = "System",
+                    Created = DateTime.Now,
+                },
+                new Customer
+                {
+                    Id = 4,
+                    Name = "Ana Martínez",
+                    BirthDate = new DateTime(1995, 1, 17),
+                    CUIL = "20456789012",
+                    GenderId = 2, // Femenino
+                    Phone = "6677889900",
+                    CreatedBy = "System",
+                    Created = DateTime.Now,
+                },
+                new Customer
+                {
+                    Id = 5,
+                    Name = "Miguel Fernández",
+                    BirthDate = new DateTime(1978, 12, 5),
+                    CUIL = "20567890123",
+                    GenderId = 1, // Masculino
+                    Phone = "5566778899",
+                    CreatedBy = "System",
+                    Created = DateTime.Now,
+                }
+            };
+
+            foreach (var customer in customers)
+            {
+                modelBuilder.Entity<Customer>().HasData(customer);
+            }
+        }
+
+
+        private static void SeedGender(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Gender>().HasData(
+            new Gender
+            {
+                Id = 1,
+                Name = "Femenino",
+                CreatedBy = "System",   // Asignar valor a CreatedBy
+                Created = DateTime.Now,
+            },
+            new Gender
+            {
+                Id = 2,
+                Name = "Masculino",
+                CreatedBy = "System",   // Asignar valor a CreatedBy
+                Created = DateTime.Now,
+            },
+            new Gender
+            {
+                Id = 3,
+                Name = "Otro",
+                CreatedBy = "System",   // Asignar valor a CreatedBy
+                Created = DateTime.Now,
+            });
+        }
+
     }
 }

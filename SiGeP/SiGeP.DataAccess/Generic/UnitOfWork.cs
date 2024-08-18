@@ -15,16 +15,27 @@ namespace SiGeP.DataAccess.Generic
         private readonly IHttpContextAccessor httpContextAccessor;
 
         private bool disposed = false;
-        public AddRepositories Repositories { get; }
 
         #endregion
 
+        #region Repositorios
 
-        public UnitOfWork(DbModelContext context, IHttpContextAccessor httpContextAccessor, AddRepositories repositoryContainer)
+        private AddRepositories addRepositories;
+        public AddRepositories AddRepositories
+        {
+            get
+            {
+                this.addRepositories ??= new AddRepositories(context);
+                return addRepositories;
+            }
+        }
+        #endregion
+
+
+        public UnitOfWork(DbModelContext context, IHttpContextAccessor httpContextAccessor)
         {
             this.context = context;
             this.httpContextAccessor = httpContextAccessor;
-            Repositories = new AddRepositories(context);
         }
 
         public void Delete(object entity)

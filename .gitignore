@@ -5,3 +5,9 @@ SiGeP/SiGeP.API/obj/
 SiGeP/SiGeP.Business/obj/
 SiGeP/SiGeP.DataAccess/obj/
 SiGeP/SiGeP.Model/obj/
+SiGeP/SiGeP.API/bin/
+SiGeP/SiGeP.Business/bin/Debug/net8.0/SiGeP.Business.deps.json
+SiGeP/SiGeP.Business/bin/Debug/net8.0/SiGeP.Business.dll
+SiGeP/SiGeP.Business/bin/
+SiGeP/SiGeP.DataAccess/bin/
+SiGeP/SiGeP.Model/bin/
