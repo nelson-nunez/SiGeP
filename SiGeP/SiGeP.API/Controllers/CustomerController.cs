@@ -10,7 +10,7 @@ using SiGeP.Model.Model;
 
 namespace SiGeP.API.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("[controller]")]
     [ApiController]
     public class CustomerController : Controller
@@ -82,29 +82,6 @@ namespace SiGeP.API.Controllers
             response.Code = result.ToString();
             return Ok(response);
         }
-
-        //[HttpPut()]
-        //public async Task<ActionResult<ActionResultDTO>> Update([FromBody] CustomerDTO dto)
-        //{
-        //    var entityFromDb = await customerBusiness.FindAsync(dto.Id);
-        //    if (entityFromDb == null)
-        //        throw new Exception("No se encontró el registro");
-
-        //    //entityFromDb = mapper.Map<Customer>(dto);
-        //    entityFromDb.Name = dto.Name;
-        //    entityFromDb.BirthDate = dto.BirthDate;
-        //    entityFromDb.CUIL = dto.CUIL;
-        //    entityFromDb.GenderId = dto.GenderId;
-        //    entityFromDb.Phone = dto.Phone;
-
-        //    var result = await customerBusiness.CustomerSaveAsync(entityFromDb);
-        //    var response = new ActionResultDTO()
-        //    {
-        //        Code = result.ToString(),
-        //        Message = "El cliente se actualizó correctamente"
-        //    };
-        //    return Ok(response);
-        //}
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<ActionResultDTO>> Delete([FromRoute] int id)

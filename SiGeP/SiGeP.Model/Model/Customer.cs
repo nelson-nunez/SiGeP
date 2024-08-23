@@ -7,6 +7,7 @@ namespace SiGeP.Model.Model
 {
     public class Customer : BaseEntity
     {
+        [Required]
         public int PersonId { get; set; }
         public virtual Person.Person Person { get; set; }
 

@@ -6,7 +6,7 @@ using SiGeP.Model.DTO;
 
 namespace SiGeP.API.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("[controller]")]
     [ApiController]
     public class GenderController : Controller

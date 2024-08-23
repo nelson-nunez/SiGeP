@@ -26,7 +26,7 @@ namespace SiGeP.Model.Model.Address
         [Column(TypeName = "VARCHAR"), StringLength(64)]
         public string? NeighborhoodName { get; set; } // Usar null si NeighborhoodName es opcional
 
-        [Column(TypeName = "VARCHAR"), StringLength(8)]
+        [Column(TypeName = "VARCHAR"), StringLength(64)]
         public string StreetNumber { get; set; }
 
         public override string ToString()

@@ -15,20 +15,37 @@ namespace SiGeP.API
         {
             services.AddScoped<UnitOfWork, UnitOfWork>();
 
-            services.AddScoped<CustomerRepository, CustomerRepository>();
-
-            services.AddScoped<GenderRepository, GenderRepository>();
-
             services.AddScoped<AppUserRepository, AppUserRepository>();
+            //Person
+            services.AddScoped<GenderRepository, GenderRepository>();
+            
+            services.AddScoped<CustomerRepository, CustomerRepository>();
+          
+            services.AddScoped<DoctorRepository, DoctorRepository>();           
+            //Address
+            services.AddScoped<CityRepository, CityRepository>();           
+            services.AddScoped<NeighborhoodRepository, NeighborhoodRepository>();           
+            services.AddScoped<ProvinceRepository, ProvinceRepository>();           
         }
 
         public static void AddBusinessServices(this IServiceCollection services)
         {
+            services.AddScoped<AuthenticationBusiness, AuthenticationBusiness>();
+            
+            //Person
             services.AddScoped<CustomerBusiness, CustomerBusiness>();
 
             services.AddScoped<GenderBusiness, GenderBusiness>();
+                        
+            services.AddScoped<DoctorBusiness, DoctorBusiness>();
 
-            services.AddScoped<AuthenticationBusiness, AuthenticationBusiness>();
+            //Address
+            services.AddScoped<CityBusiness, CityBusiness>();
+
+            services.AddScoped<ProvinceBusiness, ProvinceBusiness>();
+
+            services.AddScoped<NeighborhoodBusiness, NeighborhoodBusiness>();
+
         }
     }
 }

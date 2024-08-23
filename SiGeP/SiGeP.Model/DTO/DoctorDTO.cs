@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace SiGeP.Model.DTO
 {
-    public class CustomerDTO : PersonDTO
+    public class DoctorDTO : PersonDTO
     {
-        public int DoctorId { get; set; }
+        //Doctor
+        public string Specialty { get; set; }
 
     }
 }

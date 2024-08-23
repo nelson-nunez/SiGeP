@@ -9,11 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiGeP.DataAccess", "SiGeP.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiGeP.Model", "SiGeP.Model\SiGeP.Model.csproj", "{CD4D299D-B52D-40DA-8967-617F88648EF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiGeP.API", "SiGeP.API\SiGeP.API.csproj", "{91B4856D-68BD-4D06-A2CE-909BB0B5A059}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiGeP.API", "SiGeP.API\SiGeP.API.csproj", "{91B4856D-68BD-4D06-A2CE-909BB0B5A059}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución", "Elementos de la solución", "{E0E07D3C-B6FA-4BA4-8145-FA9C6E07A7A1}"
 	ProjectSection(SolutionItems) = preProject
 		Readme.txt = Readme.txt
+		SqlQuery_1.sql = SqlQuery_1.sql
 	EndProjectSection
 EndProject
 Global

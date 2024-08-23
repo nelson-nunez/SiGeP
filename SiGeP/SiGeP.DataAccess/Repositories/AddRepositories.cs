@@ -10,7 +10,16 @@ namespace SiGeP.DataAccess.Repositories
             _context = context;
         }
 
-        #region Repositorios
+        private AppUserRepository _appUserRepository;
+        public AppUserRepository AppUserRepository
+        {
+            get
+            {
+                return _appUserRepository ??= new AppUserRepository(_context);
+            }
+        }
+
+        #region Person
 
         private GenderRepository _genderRepository;
         public GenderRepository GenderRepository
@@ -30,16 +39,47 @@ namespace SiGeP.DataAccess.Repositories
             }
         }
 
-        private AppUserRepository _appUserRepository;
-        public AppUserRepository AppUserRepository
+        
+        private DoctorRepository _doctorRepository;
+        public DoctorRepository DoctorRepository
         {
             get
             {
-                return _appUserRepository ??= new AppUserRepository(_context);
+                return _doctorRepository ??= new DoctorRepository(_context);
             }
         }
 
         #endregion
 
+        #region ADDRESS
+
+        private CityRepository _cityRepository;
+        public CityRepository CityRepository
+        {
+            get
+            {
+                return _cityRepository ??= new CityRepository(_context);
+            }
+        }
+        
+        private NeighborhoodRepository _neighborhoodRepository;
+        public NeighborhoodRepository NeighborhoodRepository
+        {
+            get
+            {
+                return _neighborhoodRepository ??= new NeighborhoodRepository(_context);
+            }
+        }
+        
+        private ProvinceRepository _provinceRepository;
+        public ProvinceRepository ProvinceRepository
+        {
+            get
+            {
+                return _provinceRepository ??= new ProvinceRepository(_context);
+            }
+        }
+
+        #endregion
     }
 }

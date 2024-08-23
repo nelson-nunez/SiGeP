@@ -12,6 +12,8 @@ namespace SiGeP.Model.Model
 {
     public class Doctor : BaseEntity
     {
+
+        [Required]
         public int PersonId { get; set; }
         public virtual Person.Person Person { get; set; }
 
