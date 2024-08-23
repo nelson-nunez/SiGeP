@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución",
 		SqlQuery_1.sql = SqlQuery_1.sql
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiGeP.UI", "SiGeP.UI\SiGeP.UI.csproj", "{1554D995-3432-4A54-BA32-0AD1187F9BA7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{91B4856D-68BD-4D06-A2CE-909BB0B5A059}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91B4856D-68BD-4D06-A2CE-909BB0B5A059}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91B4856D-68BD-4D06-A2CE-909BB0B5A059}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1554D995-3432-4A54-BA32-0AD1187F9BA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1554D995-3432-4A54-BA32-0AD1187F9BA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1554D995-3432-4A54-BA32-0AD1187F9BA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1554D995-3432-4A54-BA32-0AD1187F9BA7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
