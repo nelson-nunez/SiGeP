@@ -26,6 +26,8 @@ namespace SiGeP.API
             services.AddScoped<CityRepository, CityRepository>();           
             services.AddScoped<NeighborhoodRepository, NeighborhoodRepository>();           
             services.AddScoped<ProvinceRepository, ProvinceRepository>();           
+            //Appointmnt
+            services.AddScoped<AppointmentRepository, AppointmentRepository>();           
         }
 
         public static void AddBusinessServices(this IServiceCollection services)
@@ -45,6 +47,9 @@ namespace SiGeP.API
             services.AddScoped<ProvinceBusiness, ProvinceBusiness>();
 
             services.AddScoped<NeighborhoodBusiness, NeighborhoodBusiness>();
+            
+            
+            services.AddScoped<AppointmentBusiness, AppointmentBusiness>();
 
         }
     }

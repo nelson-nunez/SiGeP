@@ -52,6 +52,9 @@ namespace SiGeP.API.Mapper
             CreateMap<Province, ProvinceDTO>().ReverseMap();
             CreateMap<City, CityDTO>().ReverseMap();
             CreateMap<Neighborhood, NeighborhoodDTO>().ReverseMap();
+            
+            
+            CreateMap<Appointment, AppointmentDTO>().ReverseMap();
 
         }
     }

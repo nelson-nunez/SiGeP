@@ -79,6 +79,15 @@ namespace SiGeP.DataAccess.Repositories
                 return _provinceRepository ??= new ProvinceRepository(_context);
             }
         }
+        
+        private AppointmentRepository _appointmentRepository;
+        public AppointmentRepository AppointmentRepository
+        {
+            get
+            {
+                return _appointmentRepository ??= new AppointmentRepository(_context);
+            }
+        }
 
         #endregion
     }

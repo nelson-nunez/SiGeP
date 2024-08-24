@@ -15,7 +15,7 @@ namespace SiGeP.API.Controllers
     //[Authorize]
     [Route("[controller]")]
     [ApiController]
-    public class CityController : Controller
+    public class AddressController : Controller
     {
         private readonly IMapper _mapper;
         private readonly CityBusiness _cityBusiness;
@@ -23,7 +23,7 @@ namespace SiGeP.API.Controllers
         private readonly ProvinceBusiness _provinceBusiness;
 
 
-        public CityController(IMapper mapper, CityBusiness cityBusiness, NeighborhoodBusiness neighborhoodBusiness, ProvinceBusiness provinceBusiness)
+        public AddressController(IMapper mapper, CityBusiness cityBusiness, NeighborhoodBusiness neighborhoodBusiness, ProvinceBusiness provinceBusiness)
         {
             _mapper = mapper;
             _cityBusiness = cityBusiness;
@@ -33,7 +33,7 @@ namespace SiGeP.API.Controllers
 
         #region Provinces
 
-        [HttpGet("Address/Provinces")]
+        [HttpGet("/Provinces")]
         public async Task<ActionResult<IEnumerable<ProvinceDTO>>> GetAllProvinces()
         {
             var list = await _provinceBusiness.GetAsync();
@@ -45,7 +45,7 @@ namespace SiGeP.API.Controllers
 
         #region Cities
 
-        [HttpGet("Address/Cities")]
+        [HttpGet("/Cities")]
         public async Task<ActionResult<IEnumerable<CityDTO>>> GetAllCities()
         {
             var list = await _cityBusiness.GetAsync();
@@ -53,7 +53,7 @@ namespace SiGeP.API.Controllers
             return Ok(dto);
         }
 
-        [HttpGet("Address/{provinceId}/Cities")]
+        [HttpGet("/{provinceId}/Cities")]
         public async Task<ActionResult<IList<CityDTO>>> GetCitiesbyProvinceId([FromRoute] int provinceId)
         {
             var list = await _cityBusiness.GetAllCitiesbyProvince(provinceId);
@@ -64,7 +64,7 @@ namespace SiGeP.API.Controllers
 
         #region Neighborhoods
 
-        [HttpGet("Address/Neighborhoods")]
+        [HttpGet("/Neighborhoods")]
         public async Task<ActionResult<IEnumerable<NeighborhoodDTO>>> GetAllNeighborhoods()
         {
             var list = await _neighborhoodBusiness.GetAsync();
@@ -72,7 +72,7 @@ namespace SiGeP.API.Controllers
             return Ok(dto);
         }
 
-        [HttpGet("Address/{cityId}/Neighborhoods")]
+        [HttpGet("/{cityId}/Neighborhoods")]
         public async Task<ActionResult<IList<NeighborhoodDTO>>> GetNeighborhoodsbyProvinceId([FromRoute] int cityId)
         {
             var list = await _neighborhoodBusiness.GetAllNeighborhoodsbyCity(cityId);
