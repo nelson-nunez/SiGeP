@@ -11,15 +11,24 @@ namespace SiGeP.Model.Model
 {
     public class Appointment : BaseEntity
     {
-        public DateTime Date { get; set; }
+        public DateTime DateStart { get; set; }
+        public DateTime DateEnd { get; set; }
 
         [Column(TypeName = "VARCHAR"), StringLength(256)]
         public string Address { get; set; }
-
+        public AppointmentStatus Status { get; set; }
+        
         public int CustomerId { get; set; }
         public virtual Customer Customer { get; set; }
-
         public virtual Payment Payment { get; set; }
         public virtual Reminder Reminder { get; set; }
+    }
+
+    public enum AppointmentStatus
+    {
+        Scheduled,
+        Rescheduled,
+        Canceled,
+        Completed
     }
 }

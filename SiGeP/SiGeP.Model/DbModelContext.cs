@@ -439,11 +439,12 @@ namespace SiGeP.Model
             new Appointment
             {
                 Id = 1,
-                Date = DateTime.Now.AddDays(1),
+                DateStart = DateTime.Now.AddDays(1),
+                DateEnd = DateTime.Now.AddDays(1).AddHours(1), 
                 CustomerId = 1,
                 Address = "1234 Centro, La Plata",
-                CreatedBy = "System",
-                Created = DateTime.Now,
+                Status = AppointmentStatus.Scheduled,
+                CreatedBy = "System"
             });
         }
         private static void SeedMedicalRecord(ModelBuilder modelBuilder)
