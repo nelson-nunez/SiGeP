@@ -13,3 +13,5 @@ SiGeP/SiGeP.DataAccess/bin/
 SiGeP/SiGeP.Model/bin/
 SiGeP/SiGeP.UI/obj/
 SiGeP/SiGeP.UI/bin/
+SiGeP/SiGeP.API/appsettings.json
+SiGeP/SiGeP.API/appsettings.Development.json
