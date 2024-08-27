@@ -1,22 +1,49 @@
-﻿@page "/ProvinceComponent"
+﻿@page "/ClientCRUD"
+
 @using SiGeP.Model.DTO
 @using Syncfusion.Blazor.DropDowns
 @using Syncfusion.Blazor.Grids
+@using SiGeP.UI.Services
+
+@inject ProvinceService ProvinceService
 
 
-
-<div class="container-sm">
-    <SfDropDownList TValue="string" TItem="ProvinceDTO"  DataSource="@Provinces">
-        <DropDownListFieldSettings Value="ID" Text="Text"></DropDownListFieldSettings>
-    </SfDropDownList>
+<div class="form-group row text-sm-left text-md-right">
+    <label class="col-form-label col-sm-3 my-auto">Sexo: </label>
+    <div class="col-sm-9 my-auto">
+        <SfDropDownList CssClass="custom-select e-multi-column"
+                        TValue="int"
+                        TItem="ProvinceDTO"
+                        Placeholder="Seleccione una opción"
+                        DataSource="@provinceList"
+                        TabIndex="4"
+                        Enabled="@enabled">
+            <DropDownListFieldSettings Value="Id" Text="Name"></DropDownListFieldSettings>
+        </SfDropDownList>
+    </div>
 </div>
 
 
 @code {
 
-    private SfGrid<ProvinceDTO> Grid { get; set; }
+    List<ProvinceDTO> provinceList = new List<ProvinceDTO>();
 
-    List<ProvinceDTO> Provinces = new List<ProvinceDTO>();
+    protected override async void OnInitialized()
+    {
+        try
+        {
+            provinceList = await ProvinceService.GetProvincesAsync();
+        }
+        catch (Exception ex)
+        {
+            NavManager.NavigateTo($"/ErrorPage/{ex.Message.Replace("/", "-")}");
+            return;
+        }
+        finally
+        {
+            StateHasChanged();
+        }
+    }
 }
 
 

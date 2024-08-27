@@ -8,7 +8,6 @@ namespace SiGeP.API
     {
         public static void AddInfraestructureServices(this IServiceCollection services)
         {
-
         }
 
         public static void AddDataAccessServices(this IServiceCollection services)
