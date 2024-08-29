@@ -1,0 +1,228 @@
+﻿@page "/LoginPage"
+@attribute [AllowAnonymous]
+
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Spinner
+
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json;
+
+@using SiGeP.UI.Data
+@using SiGeP.UI.Helpers
+@using SiGeP.UI.Services
+@using SiGeP.UI.Components
+
+@inject IHttpContextAccessor contextAccessor
+@inject NavigationManager NavigationManager
+@inject AuthenticationService autenticationService
+
+
+<EditForm Model="@input" OnValidSubmit="@LoginAsync">
+    <FluentValidator TValidator="LoginInputValidator" />
+    <div class="login-container">
+        <div class="login-card">
+            <h2 class="login-header">Mi cuenta</h2>
+            <div class="login-body">
+                @* Username *@
+                <div class="form-group">
+                    <label for="username" class="form-label">Username</label>
+                    <input id="username" type="text" class="form-control" placeholder="Email or Phone" @bind="@input.UserName" tabindex="1">
+                    <ValidationMessage For="() => input.UserName"></ValidationMessage>
+                </div>
+                @* Password *@
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input id="password" type="password" class="form-control" placeholder="Password" @bind="@input.Password" tabindex="2">
+                    <ValidationMessage For="() => input.Password"></ValidationMessage>
+                </div>
+                @* Opciones *@
+                <div class="options">
+                    <a class="links-help" href="#" tabindex="5" @onclick="@(e=>NavigateToAsync("/PasswordRecoveryPage"))">
+                        ¿Olvidaste tu contraseña?
+                    </a>
+                    <a class="links-help" href="#" tabindex="6" @onclick="@(e=>NavigateToAsync("/EmailRecoveryPage"))">
+                        ¿Olvidaste tu email?
+                    </a>
+                </div>
+                @* Acciones *@
+                <div class="action">
+                    <button type="submit" class="btn login-button text-white" tabindex="3">
+                        Ingresar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+<style>
+    /*#region LOGIN*/
+
+    /* Contenedor principal para centrar el formulario */
+    .login-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        width: 100vw;
+        background-image: url('images/img-01.jpg');
+        background-size: cover;
+        background-position: center;
+    }
+
+    /* Estilos para la tarjeta de inicio de sesión */
+    .login-card {
+        width: 500px;
+        padding: 20px;
+        backdrop-filter: blur(10px);
+        background-color: rgba(255,255,255,0.13);
+        border-radius: 10px;
+        border: 2px solid rgba(255,255,255,0.1);
+        box-shadow: 0 0 40px rgba(8,7,16,0.6);
+    }
+
+    /* Estilos para el encabezado del formulario */
+    .login-header {
+        color: whitesmoke;
+        text-align: center;
+        margin-bottom: 1.5rem;
+        font-size: 2.5rem;
+    }
+
+    /* Estilos para los grupos de formularios */
+    .form-group {
+        margin-bottom: 0px !important;
+        padding: 0px !important
+    }
+
+    /* Estilos para las etiquetas */
+    .form-label {
+        display: block;
+        margin-top: 30px;
+        font-size: 16px;
+        font-weight: 500;
+    }
+
+    /* Estilos para los campos de entrada */
+    .form-control {
+        height: 50px;
+        background-color: rgba(2, 255, 111, 0.3);
+        border-radius: 3px;
+        padding: 0 10px;
+        font-size: 14px;
+        font-weight: 300;
+        color: #ffffff;
+    }
+
+    ::placeholder {
+        color: #e5e5e5;
+    }
+
+    /* Estilos para las opciones de ayuda */
+    .options {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+        font-size: 0.8rem;
+    }
+
+    .links-help {
+        color: #7dc243;
+        text-decoration: unset;
+        cursor: pointer;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
+    }
+
+    .separador {
+        color: #7dc243;
+    }
+
+    /* Estilos para el botón de inicio de sesión */
+    .login-button {
+        background-color: #7dc243 !important;
+        border-radius: 15px !important;
+        padding: 0.5rem 2rem !important;
+        width: 100%;
+    }
+
+    /* Estilos para la sección de acción */
+    .action {
+        display: flex;
+        justify-content: center;
+    }
+
+
+    /*#endregion */
+
+</style>
+
+@code 
+{
+    #region Vars
+
+    [CascadingParameter]
+    public HttpContext? httpContext { get; set; }
+
+    [CascadingParameter]
+    public MainLayout mainLayoutObj { get; set; }
+
+    private bool VisibleProperty { get; set; } = false;
+
+    public InputModel input { get; set; } = new InputModel();
+
+    #endregion
+
+    protected override async void OnInitialized()
+    {
+        #region Revisa el estado del logueo
+
+        if (httpContext?.User?.Identity != null && httpContext.User.Identity.IsAuthenticated)
+        {
+            NavigationManager.NavigateTo($"Identity/Account/Logout", forceLoad: true);
+            return;
+        }
+        #endregion
+    }
+
+    public async Task LoginAsync()
+    {
+        try
+        {
+            input.UserName = input.UserName.Replace(" ", String.Empty);
+            input.Password = input.Password.Replace(" ", String.Empty);
+            if (string.IsNullOrEmpty(input.UserName) || string.IsNullOrEmpty(input.Password))
+            {
+                await mainLayoutObj.ShowCardMessage(MessageTypes.Warning, "Ingrese su usuario y contraseña.");
+                return;
+            }
+            #region MyRegion
+
+            await mainLayoutObj.ShowSpinner();
+            var authenticationResult = await autenticationService.Authenticate(input.UserName, input.Password);
+            if (!string.IsNullOrEmpty(authenticationResult.AccessToken))
+            {
+                var jsonStr = JsonConvert.SerializeObject(authenticationResult);
+                NavigationManager.NavigateTo($"Identity/Account/Login?jsonStr={jsonStr}", forceLoad: true);
+            }
+            else
+            {
+                await mainLayoutObj.ShowCardMessage(MessageTypes.Warning, "Usuario o contraseña incorrectos. Intente nuevamente.");
+            }
+
+            #endregion
+        }
+        catch (Exception ex)
+        {
+            await mainLayoutObj.ShowCardMessage(MessageTypes.Error, ex.Message);
+        }
+        finally
+        {
+            await mainLayoutObj.HideSpinner();
+        }
+    }
+
+    public async Task NavigateToAsync(string url)
+    {
+        NavigationManager.NavigateTo(url, forceLoad: true);
+    }
+}

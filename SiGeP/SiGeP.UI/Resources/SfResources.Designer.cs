@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BaseUI.Resources
+namespace SiGeP.UI.Resources
 {
     using System;
 
@@ -45,7 +45,7 @@ namespace BaseUI.Resources
             {
                 if (object.ReferenceEquals(resourceMan, null))
                 {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BaseUI.Resources.SfResources", typeof(SfResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SiGeP.UI.Resources.SfResources", typeof(SfResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

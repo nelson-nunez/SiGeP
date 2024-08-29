@@ -1,9 +1,7 @@
-﻿@page "/ClientCRUD"
-
-@using SiGeP.Model.DTO
+﻿@using SiGeP.Model.DTO
 @using Syncfusion.Blazor.DropDowns
-@using Syncfusion.Blazor.Grids
 @using SiGeP.UI.Services
+@inject NavigationManager NavManager
 
 @inject ProvinceService ProvinceService
 
@@ -14,10 +12,11 @@
         <SfDropDownList CssClass="custom-select e-multi-column"
                         TValue="int"
                         TItem="ProvinceDTO"
-                        Placeholder="Seleccione una opción"
+                        Placeholder="Seleccione una provincia"
                         DataSource="@provinceList"
+                        @bind-Value="@selectedprovince.Id"
                         TabIndex="4"
-                        Enabled="@enabled">
+                        Enabled="enabled">
             <DropDownListFieldSettings Value="Id" Text="Name"></DropDownListFieldSettings>
         </SfDropDownList>
     </div>
@@ -25,8 +24,15 @@
 
 
 @code {
+    #region Vars
+
+    public bool enabled { get; set; } = true;
 
     List<ProvinceDTO> provinceList = new List<ProvinceDTO>();
+
+    ProvinceDTO selectedprovince = new ProvinceDTO();
+
+    #endregion
 
     protected override async void OnInitialized()
     {

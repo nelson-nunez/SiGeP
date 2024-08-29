@@ -1,0 +1,145 @@
+﻿/*Custom Styles*/
+
+/*#region Estilos Generales */
+
+.custom-container {
+    height: 100vh !important;
+}
+
+/*Centra en el medio vertical de la pantalla*/
+.custom-full-center {
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-headers {
+    color: #006674;
+    text-align: left;
+    margin: 0 0 0.3rem 0;
+}
+
+.principal-button {
+    background-color: #7dc243 !important;
+    border-radius: 3px !important;
+    margin: 1rem;
+    padding: 0.5rem 2rem 0.5rem 2rem !important;
+}
+
+/*Card*/
+.card, .card-body, .custom-headers, .card-footer {
+    padding: 0.25rem !important;
+    /*border: hidden;*/
+}
+
+.form-group {
+    width: 100% !important;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding: 1rem !important;
+}
+
+.custom-select {
+    padding: 0.15rem;
+    height: auto;
+    padding-right: 4px !important;
+}
+
+/*Dropdown ancho auto y con text wrap*/
+.e-multi-column.e-ddl.e-popup.e-popup-open {
+    text-overflow: unset !important;
+    padding-right: 4px !important;
+}
+
+/*.e-tab {
+    padding: 0.5rem !important;
+    border: 5px solid rgb(173, 255, 47);
+}*/
+
+/*#endregion */
+
+/*#region GRID Syncfusion Icons*/
+
+.e-bigger .e-tbar-btn .tb-icons {
+    font-size: 18px;
+}
+
+.e-tbar-btn .tb-icons {
+    font-family: 'Material_toolbar';
+    speak: none;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+}
+
+    .e-tbar-btn .tb-icons .e-numbering-icon {
+        font-size: 17px;
+    }
+
+.e-reload-icon:before {
+    content: '\e716';
+}
+
+.e-menu:before {
+    content: '\e7cd';
+}
+
+.e-icons {
+    color: #00ffff;
+    font-size: 26px;
+}
+
+.e-search:before {
+    content: '\e724';
+}
+
+.e-download:before {
+    content: '\e75d';
+}
+
+.e-font:before {
+    content: '\e80e';
+}
+
+.e-print::before {
+    content: '\e75d';
+}
+
+.e-refresh::before {
+    content: '\e716';
+}
+
+.e-save::before {
+    content: '\e74d';
+}
+
+.e-send::before {
+    content: '\e816';
+}
+
+.e-eye::before {
+    content: '\e7de';
+}
+
+.e-grid .e-spinner-pane {
+    display: none;
+}
+
+.e-pager,
+.e-grid .e-icons,
+.e-pager.sf-pager .e-link,
+.e-pager.sf-pager .e-next.e-icons.e-icon-next.e-nextpage.e-pager-default,
+.e-pager .e-pagercontainer .e-lastpage,
+.e-pager.sf-pager .e-prev,
+.e-pager .e-pagercontainer .e-firstpage {
+    color: #7cb840;
+}
+
+    .e-pager .e-currentitem {
+        background: #7cb840;
+        color: white !important;
+    }
+/*#endregion */
+

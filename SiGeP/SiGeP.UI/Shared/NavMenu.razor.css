@@ -1,4 +1,76 @@
 .navbar-toggler {
+    background-color: rgba(125, 194, 67, 0.3); /* Cambia el fondo a un tono similar al color principal del login */
+}
+
+.top-row {
+    height: 3.5rem;
+    background-color: rgba(0, 0, 0, 0.6); /* Oscurece un poco más para hacer contraste con los elementos */
+}
+
+.navbar-brand {
+    font-size: 1.2rem;
+    color: #7dc243; /* Ajusta el tamaño y color de la marca para que coincida con el verde usado en el login */
+}
+
+.oi {
+    width: 2rem;
+    font-size: 1.2rem;
+    vertical-align: text-top;
+    top: -2px;
+    color: #ffffff; /* Asegura que los íconos también sean visibles en el fondo */
+}
+
+.nav-item {
+    font-size: 0.8rem;
+    padding-bottom: 0.5rem;
+    color: #d7d7d7; /* Mantén el color gris claro para los ítems de navegación */
+}
+
+    .nav-item:first-of-type {
+        padding-top: 1rem;
+    }
+
+    .nav-item:last-of-type {
+        padding-bottom: 1rem;
+    }
+
+    .nav-item ::deep a {
+        color: #d7d7d7;
+        border-radius: 4px;
+        height: 3rem;
+        display: flex;
+        align-items: center;
+        line-height: 3rem;
+        background-color: rgba(0, 0, 0, 0.3); /* Añade un fondo oscuro semitransparente para que los links se destaquen */
+    }
+
+        .nav-item ::deep a.active {
+            background-color: #7dc243; /* El mismo verde para los elementos activos */
+            color: white;
+        }
+
+        .nav-item ::deep a:hover {
+            background-color: rgba(125, 194, 67, 0.3); /* Ajusta el color de fondo al pasar el cursor para coincidir con la gama de colores */
+            color: white;
+        }
+
+@media (min-width: 641px) {
+    .navbar-toggler {
+        display: none;
+    }
+
+    .collapse {
+        display: block;
+    }
+
+    .nav-scrollable {
+        height: calc(100vh - 3.5rem);
+        overflow-y: auto;
+    }
+}
+
+
+/*.navbar-toggler {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
@@ -55,14 +127,14 @@
         display: none;
     }
 
-    .collapse {
+    .collapse {*/
         /* Never collapse the sidebar for wide screens */
-        display: block;
+        /*display: block;
     }
     
-    .nav-scrollable {
+    .nav-scrollable {*/
         /* Allow sidebar to scroll for tall menus */
-        height: calc(100vh - 3.5rem);
+        /*height: calc(100vh - 3.5rem);
         overflow-y: auto;
     }
-}
+}*/

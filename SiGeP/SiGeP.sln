@@ -14,6 +14,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución", "Elementos de la solución", "{E0E07D3C-B6FA-4BA4-8145-FA9C6E07A7A1}"
 	ProjectSection(SolutionItems) = preProject
 		Readme.txt = Readme.txt
+		Readme.UI.txt = Readme.UI.txt
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiGeP.UI", "SiGeP.UI\SiGeP.UI.csproj", "{1554D995-3432-4A54-BA32-0AD1187F9BA7}"

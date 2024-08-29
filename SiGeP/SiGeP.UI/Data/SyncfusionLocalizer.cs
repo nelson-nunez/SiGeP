@@ -1,4 +1,4 @@
-﻿using BaseUI.Resources;
+﻿using SiGeP.UI.Resources;
 using Syncfusion.Blazor;
 
 namespace SiGeP.UI.Data

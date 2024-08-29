@@ -2,18 +2,19 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Localization;
 using SiGeP.API.Common.Model;
 using SiGeP.API.Common;
-using SiGeP.API;
 using Syncfusion.Blazor;
 using System.Globalization;
 using System.Net.Http.Headers;
 using SiGeP.UI.Data;
-using SiGeP.UI.Services.BaseUI.Services;
+using SiGeP.UI;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configuración de HttpClient
-// Permite obtener el contexto del usuario o la sesión actual
-builder.Services.AddHttpContextAccessor(); 
+
+
+#region Auth
+
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
 {
@@ -23,6 +24,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     options.LoginPath = "/LoginPage";
     options.AccessDeniedPath = "/AccessDenied";
 });
+
+#endregion
 
 builder.Services.AddHttpClient<WebApiClient>("BaseApiConfig", client =>
 {
@@ -36,7 +39,8 @@ builder.Services.AddHttpClient<WebApiClient>("BaseApiConfig", client =>
     client.Timeout = TimeSpan.FromMinutes(webApiConfig.Timeout);
 });
 
-// Configuración de servicios de Razor Pages, Blazor y Syncfusion
+#region Services Razor Pages, Blazor y Syncfusion
+
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSyncfusionBlazor();
@@ -56,24 +60,29 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
     options.SupportedCultures = supportedCultures;
     options.SupportedUICultures = supportedCultures;
     options.RequestCultureProviders = new List<IRequestCultureProvider>() {
-     new QueryStringRequestCultureProvider() // Puedes usar otros proveedores de localización aquí
+     new QueryStringRequestCultureProvider() // Puedes usar otros proveedores de localizaciï¿½n aquï¿½
     };
 });
 
 Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MjQ5MTY3N0AzMTM5MmUzMjJlMzBoQzFJT1BOTnNSbkpkT2lZd2w1RFBJeGxrYkdvUFVBMFp1bzhpQkpYaWU0PQ==");
 
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
 builder.Services.AddSingleton(typeof(ISyncfusionStringLocalizer), typeof(SyncfusionLocalizer));
 
-// Agregar servicios de infraestructura
+#endregion
+
+#region Services Infrastructure
+
 builder.Services.AddLocalization();
+
 builder.Services.AddControllers();
-builder.Services.AddInfraestructureServices();
 
-builder.Services.AddScoped<ProvinceService>();
+builder.Services.AddInfrastructureServices();
 
-asdasdasdasd
+#endregion
 
+#region Old Configure Section
 
 var app = builder.Build();
 
@@ -98,3 +107,5 @@ app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
 app.Run();
+
+#endregion

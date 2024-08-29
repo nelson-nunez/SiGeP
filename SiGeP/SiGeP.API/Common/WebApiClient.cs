@@ -213,20 +213,48 @@ namespace SiGeP.API.Common
 
         public async Task<T> PostAsync<T>(string resource, object dto) where T : new()
         {
-            var dtoAsJson = JsonSerializer.Serialize(dto);
-            var response = await httpClient.PostAsync(resource, new StringContent(dtoAsJson, Encoding.UTF8, "application/json"));
-
-            if (response.IsSuccessStatusCode)
-                return await response.Content.ReadFromJsonAsync<T>();
-            else
+            try
             {
-                var errorDto = response.Content.ReadFromJsonAsync<ExceptionDTO>().Result;
-                if (string.IsNullOrEmpty(errorDto.LogId))
-                    throw new RemoteBusinessException(errorDto.Message);
+                var dtoAsJson = JsonSerializer.Serialize(dto);
+                var response = await httpClient.PostAsync(resource, new StringContent(dtoAsJson, Encoding.UTF8, "application/json"));
+
+                // Log the response for debugging purposes (optional)
+                var responseContent = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Response Content: {responseContent}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadFromJsonAsync<T>();
+                    if (result != null)
+                    {
+                        return result;
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("The response content could not be deserialized into the expected type.");
+                    }
+                }
                 else
-                    throw new RemoteUnknownException(errorDto.Message, $"{httpClient.BaseAddress.AbsoluteUri}{resource}", errorDto.LogId);
+                {
+                    // Handle error response
+                    var errorDto = await response.Content.ReadFromJsonAsync<ExceptionDTO>();
+                    throw new RemoteUnknownException( errorDto?.Message ?? "An unknown error occurred.", $"{httpClient.BaseAddress.AbsoluteUri}{resource}", errorDto?.LogId);
+                }
+            }
+            catch (HttpRequestException httpEx)
+            {
+                // Handle specific HTTP request exceptions
+                Console.WriteLine($"HTTP Request error: {httpEx.Message}");
+                throw new RemoteUnknownException("A network error occurred while attempting to reach the server.", $"{httpClient.BaseAddress.AbsoluteUri}{resource}");
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (optional)
+                Console.WriteLine($"Exception: {ex.Message}");
+                throw;
             }
         }
+
 
         #endregion
 

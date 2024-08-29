@@ -1,19 +1,73 @@
-﻿@inherits LayoutComponentBase
+﻿@using SiGeP.UI.Components
+@inherits LayoutComponentBase
 
 <PageTitle>SiGeP.UI</PageTitle>
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+<CascadingValue Value="@this">
+    <Syncfusion.Blazor.Spinner.SfSpinner 
+        @ref="@SpinnerObj"
+        Type="Syncfusion.Blazor.Spinner.SpinnerType.HighContrast"
+        Size="50"
+        CssClass="e-spin-overlay"
+        ZIndex="9999">
+    </Syncfusion.Blazor.Spinner.SfSpinner>
+    <div class="page">
+        <AuthorizeView>
+            <Authorized>
+                <div class="sidebar">
+                    <NavMenu />
+                </div>
+            </Authorized>
+        </AuthorizeView>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+        <div class="main" style="width:95%">
+            <AuthorizeView>
+                <Authorized>
+                    <div class="top-row px-4">
+                        <a href="Identity/Account/Logout">
+                            <img class="rounded mx-2 img-fluid" src="/images/cerrar-sesion.png" style="height: 2.8rem"/>
+                        </a>
+                    </div>
+                </Authorized>
+            </AuthorizeView>
+            <div class="content">
+                @Body
+                <MessageCardComponent @ref="messageCardComponent"></MessageCardComponent>
+            </div>
         </div>
+    </div>
+</CascadingValue>
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
+
+@code {
+
+    [CascadingParameter]
+    public HttpContext? HttpContext { get; set; }
+
+    #region MessageCardComponent
+
+    private MessageCardComponent messageCardComponent;
+
+    public async Task ShowCardMessage(string type, string message, string title = "", string url = "")
+    {
+        await messageCardComponent.ShowMessage(type, message, title, url);
+    }
+
+    #endregion
+
+    #region Spinner Global
+
+    private Syncfusion.Blazor.Spinner.SfSpinner SpinnerObj;
+
+    public async Task ShowSpinner()
+    {
+        await SpinnerObj.ShowAsync();
+    }
+
+    public async Task HideSpinner()
+    {
+        await SpinnerObj.HideAsync();
+    }
+
+    #endregion
+}
