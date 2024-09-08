@@ -1,4 +1,5 @@
-﻿using SiGeP.DataAccess.Generic;
+﻿using SiGeP.Business.Notifiers;
+using SiGeP.DataAccess.Generic;
 using SiGeP.Model.Base;
 using SiGeP.Model.Model;
 using System;
@@ -30,22 +31,12 @@ namespace SiGeP.Business
             return await unitOfWork.AddRepositories.AppointmentRepository.GetAsync();
         }
 
-        //public async Task<IEnumerable<Appointment>> GetListAsync(DateTime date)
-        //{
-        //    IEnumerable<Appointment> list = new List<Appointment>();
-        //    list = await unitOfWork.AddRepositories.AppointmentRepository.GetListAsync(x => x.Date.Date == date.Date);
-        //    return list;
-        //}
-
         public async Task<PagedDataResponse<Appointment>> GetPagedResultAsync(PagingSortFilterRequest request)
         {
             IEnumerable<Appointment> list = new List<Appointment>();
             Expression<Func<Appointment, bool>> filter = x => true;
 
             // Añadir filtros específicos aquí si es necesario
-            // Por ejemplo, si quieres filtrar por médico o cliente:
-            // if (!string.IsNullOrEmpty(request.DoctorName))
-            //     filter = filter.And(x => x.Doctor.Name.ToUpper().Contains(request.DoctorName.ToUpper()));
 
             var pagedDataResult = await unitOfWork.AddRepositories.AppointmentRepository.GetPagedResultAsync(
                 request.FilterBy, request.FilterValue, filter, request.OrderBy, request.PageSize, request.PageIndex);
@@ -57,23 +48,54 @@ namespace SiGeP.Business
         {
             try
             {
-                // Prueba con semáforo
                 await _semaphoreSlim.WaitAsync();
 
+                #region Validaciones
+
+                // Validar que el turno no exceda las 3 horas
+                if (entity.DateEnd - entity.DateStart > TimeSpan.FromHours(3))
+                    throw new ArgumentException("El turno no puede exceder las 3 horas");
+
+                // Verificar que no exista otro turno en el mismo intervalo de tiempo 
+                var existe = await unitOfWork.AddRepositories.AppointmentRepository
+                    .GetAsync(x => (entity.DateStart >= x.DateStart && entity.DateStart < x.DateEnd) ||
+                                   (entity.DateEnd > x.DateStart && entity.DateEnd <= x.DateEnd) ||
+                                   (entity.DateStart <= x.DateStart && entity.DateEnd >= x.DateEnd));
+                if (existe.Any())
+                    throw new InvalidOperationException("Ya existen turnos asignados en la fecha y hora indicada");
+
+                #endregion
+
+                #region Observer
+
+                // Crear instancia de Notifier<Appointment>
+                var appointmentNotifier = new Notifier<Appointment>();
+
+                // Crear y adjuntar observadores
+                var reminderObserver = new ReminderObserver();
+                var paymentObserver = new PaymentObserver();
+
+                appointmentNotifier.Attach(reminderObserver);
+                //appointmentNotifier.Attach(paymentObserver);
+
+                #endregion
+
+                // Guardar la cita en la base de datos
                 if (entity.Id == 0)
-                {
                     await unitOfWork.AddRepositories.AppointmentRepository.AddAsync(entity);
-                }
                 else
-                {
                     unitOfWork.AddRepositories.AppointmentRepository.Update(entity);
-                }
+
                 await unitOfWork.CompleteAsync();
+
+                // Notificar a los observadores después de la creación/actualización
+                appointmentNotifier.Notify(entity);
+
                 return entity.Id;
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
             finally
             {

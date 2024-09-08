@@ -90,5 +90,14 @@ namespace SiGeP.DataAccess.Repositories
         }
 
         #endregion
+
+        private ReminderRepository _reminderRepository;
+        public ReminderRepository ReminderRepository
+        {
+            get
+            {
+                return _reminderRepository ??= new ReminderRepository(_context);
+            }
+        }
     }
 }

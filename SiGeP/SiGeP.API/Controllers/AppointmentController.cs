@@ -84,6 +84,8 @@ namespace SiGeP.API.Controllers
         public async Task<ActionResult<ActionResultDTO>> Add([FromBody] AppointmentDTO dto)
         {
             var entity = mapper.Map<Appointment>(dto);
+            entity.Payment = null;
+            entity.Reminder = null;
             var result = await appointmentBusiness.AppointmentSaveAsync(entity);
             var response = new ActionResultDTO
             {
