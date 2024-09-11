@@ -86,7 +86,7 @@ namespace SiGeP.API.Controllers
             var entity = mapper.Map<Appointment>(dto);
             entity.Payment = null;
             entity.Reminder = null;
-            var result = await appointmentBusiness.AppointmentSaveAsync(entity);
+            var result = await appointmentBusiness.SaveAsync(entity);
             var response = new ActionResultDTO
             {
                 Message = dto.Id > 0 ? "El turno se actualizó correctamente" : "El turno se registró correctamente",

@@ -80,7 +80,7 @@ namespace SiGeP.API.Controllers
         public async Task<ActionResult<ActionResultDTO>> Add([FromBody] DoctorDTO dto)
         {
             var entity = _mapper.Map<Doctor>(dto);
-            var result = await _doctorBusiness.DoctorSaveAsync(entity);
+            var result = await _doctorBusiness.SaveAsync(entity);
 
             var response = new ActionResultDTO
             {

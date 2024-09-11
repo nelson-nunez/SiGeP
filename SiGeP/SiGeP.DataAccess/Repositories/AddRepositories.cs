@@ -1,103 +1,50 @@
 ﻿using SiGeP.Model;
+using SiGeP.Model.Model.Address;
+using SiGeP.Model.Model;
+using SiGeP.Model.ModelUser;
+using SiGeP.DataAccess.Generic;
 
 namespace SiGeP.DataAccess.Repositories
 {
     public class AddRepositories
     {
         private readonly DbModelContext _context;
+
+        // Diccionario para almacenar las instancias de los repositorios
+        private readonly Dictionary<Type, object> _repositories;
+
         public AddRepositories(DbModelContext context)
         {
             _context = context;
+
+            // ACA DEFINIR LOS REPOSITORIOS <-----------------------------------------------------------------------
+            _repositories = new Dictionary<Type, object>
+            {
+                //Usuarios
+                { typeof(AppUser), new AppUserRepository(_context) },
+                //Persona
+                { typeof(Gender), new GenderRepository(_context) },
+                { typeof(Customer), new CustomerRepository(_context) },
+                { typeof(Doctor), new DoctorRepository(_context) },
+                //Address
+                { typeof(City), new CityRepository(_context) },
+                { typeof(Neighborhood), new NeighborhoodRepository(_context) },
+                { typeof(Province), new ProvinceRepository(_context) },
+                //Turnos
+                { typeof(Appointment), new AppointmentRepository(_context) },
+                { typeof(Reminder), new ReminderRepository(_context) }
+            };
         }
 
-        private AppUserRepository _appUserRepository;
-        public AppUserRepository AppUserRepository
+        // Método genérico GetRepository para obtener el repositorio basado en el tipo
+        public GenericRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
-            get
+            var type = typeof(TEntity);
+            if (_repositories.TryGetValue(type, out var repository))
             {
-                return _appUserRepository ??= new AppUserRepository(_context);
+                return repository as GenericRepository<TEntity>;
             }
-        }
-
-        #region Person
-
-        private GenderRepository _genderRepository;
-        public GenderRepository GenderRepository
-        {
-            get
-            {
-                return _genderRepository ??= new GenderRepository(_context);
-            }
-        }
-
-        private CustomerRepository _customerRepository;
-        public CustomerRepository CustomerRepository
-        {
-            get
-            {
-                return _customerRepository ??= new CustomerRepository(_context);
-            }
-        }
-
-        
-        private DoctorRepository _doctorRepository;
-        public DoctorRepository DoctorRepository
-        {
-            get
-            {
-                return _doctorRepository ??= new DoctorRepository(_context);
-            }
-        }
-
-        #endregion
-
-        #region ADDRESS
-
-        private CityRepository _cityRepository;
-        public CityRepository CityRepository
-        {
-            get
-            {
-                return _cityRepository ??= new CityRepository(_context);
-            }
-        }
-        
-        private NeighborhoodRepository _neighborhoodRepository;
-        public NeighborhoodRepository NeighborhoodRepository
-        {
-            get
-            {
-                return _neighborhoodRepository ??= new NeighborhoodRepository(_context);
-            }
-        }
-        
-        private ProvinceRepository _provinceRepository;
-        public ProvinceRepository ProvinceRepository
-        {
-            get
-            {
-                return _provinceRepository ??= new ProvinceRepository(_context);
-            }
-        }
-        
-        private AppointmentRepository _appointmentRepository;
-        public AppointmentRepository AppointmentRepository
-        {
-            get
-            {
-                return _appointmentRepository ??= new AppointmentRepository(_context);
-            }
-        }
-
-        #endregion
-
-        private ReminderRepository _reminderRepository;
-        public ReminderRepository ReminderRepository
-        {
-            get
-            {
-                return _reminderRepository ??= new ReminderRepository(_context);
-            }
+            throw new NotSupportedException($"Repository for type {type.Name} not found.");
         }
     }
 }

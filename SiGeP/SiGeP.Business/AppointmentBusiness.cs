@@ -1,34 +1,18 @@
-﻿using SiGeP.Business.Notifiers;
+﻿using SiGeP.Business.Base;
+using SiGeP.Business.Notifiers;
 using SiGeP.DataAccess.Generic;
 using SiGeP.Model.Base;
 using SiGeP.Model.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SiGeP.Business
 {
-    public class AppointmentBusiness
+    public class AppointmentBusiness: BusinessBase<Appointment>
     {
-        private readonly UnitOfWork unitOfWork;
         private static readonly SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1, 1);
 
-        public AppointmentBusiness(UnitOfWork unitOfWork)
+        public AppointmentBusiness(UnitOfWork unitOfWork) : base(unitOfWork)
         {
-            this.unitOfWork = unitOfWork;
-        }
-
-        public async Task<Appointment> FindAsync(int id)
-        {
-            return await unitOfWork.AddRepositories.AppointmentRepository.FindAsync(id);
-        }
-
-        public async Task<IEnumerable<Appointment>> GetAsync()
-        {
-            return await unitOfWork.AddRepositories.AppointmentRepository.GetAsync();
         }
 
         public async Task<PagedDataResponse<Appointment>> GetPagedResultAsync(PagingSortFilterRequest request)
@@ -37,14 +21,13 @@ namespace SiGeP.Business
             Expression<Func<Appointment, bool>> filter = x => true;
 
             // Añadir filtros específicos aquí si es necesario
-
-            var pagedDataResult = await unitOfWork.AddRepositories.AppointmentRepository.GetPagedResultAsync(
+            var pagedDataResult = await unitOfWork.AddRepositories.GetRepository<Appointment>().GetPagedResultAsync(
                 request.FilterBy, request.FilterValue, filter, request.OrderBy, request.PageSize, request.PageIndex);
 
             return pagedDataResult;
         }
 
-        public async Task<int> AppointmentSaveAsync(Appointment entity)
+        public async Task<int> SaveAsync(Appointment entity)
         {
             try
             {
@@ -57,7 +40,7 @@ namespace SiGeP.Business
                     throw new ArgumentException("El turno no puede exceder las 3 horas");
 
                 // Verificar que no exista otro turno en el mismo intervalo de tiempo 
-                var existe = await unitOfWork.AddRepositories.AppointmentRepository
+                var existe = await unitOfWork.AddRepositories.GetRepository<Appointment>()
                     .GetAsync(x => (entity.DateStart >= x.DateStart && entity.DateStart < x.DateEnd) ||
                                    (entity.DateEnd > x.DateStart && entity.DateEnd <= x.DateEnd) ||
                                    (entity.DateStart <= x.DateStart && entity.DateEnd >= x.DateEnd));
@@ -68,28 +51,28 @@ namespace SiGeP.Business
 
                 #region Observer
 
-                // Crear instancia de Notifier<Appointment>
-                var appointmentNotifier = new Notifier<Appointment>();
+                //// Crear instancia de Notifier<Appointment>
+                //var appointmentNotifier = new Notifier<Appointment>();
 
-                // Crear y adjuntar observadores
-                var reminderObserver = new ReminderObserver();
-                var paymentObserver = new PaymentObserver();
+                //// Crear y adjuntar observadores
+                //var reminderObserver = new ReminderObserver();
+                //var paymentObserver = new PaymentObserver();
 
-                appointmentNotifier.Attach(reminderObserver);
-                //appointmentNotifier.Attach(paymentObserver);
+                //appointmentNotifier.Attach(reminderObserver);
+                ////appointmentNotifier.Attach(paymentObserver);
 
                 #endregion
 
                 // Guardar la cita en la base de datos
                 if (entity.Id == 0)
-                    await unitOfWork.AddRepositories.AppointmentRepository.AddAsync(entity);
+                    await unitOfWork.AddRepositories.GetRepository<Appointment>().AddAsync(entity);
                 else
-                    unitOfWork.AddRepositories.AppointmentRepository.Update(entity);
+                     unitOfWork.AddRepositories.GetRepository<Appointment>().Update(entity);
 
                 await unitOfWork.CompleteAsync();
 
                 // Notificar a los observadores después de la creación/actualización
-                appointmentNotifier.Notify(entity);
+                //appointmentNotifier.Notify(entity);
 
                 return entity.Id;
             }
@@ -101,14 +84,6 @@ namespace SiGeP.Business
             {
                 _semaphoreSlim.Release();
             }
-        }
-
-        public async Task<bool> DeleteAsync(int id)
-        {
-            var appointmentToDelete = await unitOfWork.AddRepositories.AppointmentRepository.FindAsync(id);
-            unitOfWork.Delete(appointmentToDelete);
-            await unitOfWork.CompleteAsync();
-            return true;
         }
     }
 }

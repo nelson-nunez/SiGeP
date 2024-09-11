@@ -1,4 +1,5 @@
-﻿using SiGeP.Business.Notifiers;
+﻿using SiGeP.Business.Base;
+using SiGeP.Business.Notifiers;
 using SiGeP.DataAccess.Generic;
 using SiGeP.Model.Base;
 using SiGeP.Model.Model;
@@ -11,38 +12,12 @@ using System.Threading.Tasks;
 
 namespace SiGeP.Business
 {
-    aca quede, agregar interfaz para los bussines y completar el guardado de los reminders
-    public class ReminderBusiness
+    public class ReminderBusiness: BusinessBase<Reminder>
     {
-        private readonly UnitOfWork unitOfWork;
         private static readonly SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1, 1);
 
-        public ReminderBusiness(UnitOfWork unitOfWork)
+        public ReminderBusiness(UnitOfWork unitOfWork) : base(unitOfWork)
         {
-            this.unitOfWork = unitOfWork;
-        }
-
-        public async Task<Reminder> FindAsync(int id)
-        {
-            return await unitOfWork.AddRepositories.ReminderRepository.FindAsync(id);
-        }
-
-        public async Task<IEnumerable<Reminder>> GetAsync()
-        {
-            return await unitOfWork.AddRepositories.ReminderRepository.GetAsync();
-        }
-
-        public async Task<PagedDataResponse<Reminder>> GetPagedResultAsync(PagingSortFilterRequest request)
-        {
-            IEnumerable<Reminder> list = new List<Reminder>();
-            Expression<Func<Reminder, bool>> filter = x => true;
-
-            // Añadir filtros específicos aquí si es necesario
-
-            var pagedDataResult = await unitOfWork.AddRepositories.ReminderRepository.GetPagedResultAsync(
-                request.FilterBy, request.FilterValue, filter, request.OrderBy, request.PageSize, request.PageIndex);
-
-            return pagedDataResult;
         }
 
         public async Task<int> ReminderAppointmentSaveAsync(Appointment entity)
@@ -70,14 +45,14 @@ namespace SiGeP.Business
                 #endregion
 
                 // Guardar el recordatorio en la base de datos
-                if (entity.Id == 0)
-                    await unitOfWork.AddRepositories.ReminderRepository.AddAsync(entity);
-                else
-                    unitOfWork.AddRepositories.ReminderRepository.Update(entity);
+                //if (entity.Id == 0)
+                //    await unitOfWork.AddRepositories.GetRepository<Appointment>().AddAsync(entity);
+                //else
+                //    unitOfWork.AddRepositories.GetRepository<Appointment>().Update(entity);
 
-                await unitOfWork.CompleteAsync();
+                //await unitOfWork.CompleteAsync();
 
-                reminderNotifier.Notify(entity);
+                //reminderNotifier.Notify(entity);
                 return entity.Id;
             }
             catch (Exception ex)
@@ -88,17 +63,6 @@ namespace SiGeP.Business
             {
                 _semaphoreSlim.Release();
             }
-        }
-
-        public async Task<bool> DeleteAsync(int id)
-        {
-            var reminderToDelete = await unitOfWork.AddRepositories.ReminderRepository.FindAsync(id);
-            if (reminderToDelete == null)
-                throw new KeyNotFoundException("Recordatorio no encontrado");
-
-            unitOfWork.Delete(reminderToDelete);
-            await unitOfWork.CompleteAsync();
-            return true;
         }
     }
 }

@@ -76,7 +76,7 @@ namespace SiGeP.API.Controllers
         public async Task<ActionResult<ActionResultDTO>> Add([FromBody] CustomerDTO dto)
         {
             var entity = mapper.Map<Customer>(dto);
-            var result = await customerBusiness.CustomerSaveAsync(entity);
+            var result = await customerBusiness.SaveAsync(entity);
             var response = new ActionResultDTO();
             response.Message = dto.Id > 0 ? "El cliente se actualizó correctamente" : "El cliente se registró correctamente";
             response.Code = result.ToString();
