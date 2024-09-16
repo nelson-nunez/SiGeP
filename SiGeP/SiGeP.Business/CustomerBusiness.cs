@@ -19,7 +19,7 @@ namespace SiGeP.Business
             return list;
         }
 
-        public async Task<int> SaveAsync(Customer entity)
+        public virtual async Task<int> SaveAsync(Customer entity)
         {
             try
             {
