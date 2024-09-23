@@ -17,3 +17,6 @@ SiGeP/SiGeP.API/appsettings.json
 SiGeP/SiGeP.API/appsettings.Development.json
 SiGeP/TestProject/bin/
 SiGeP/TestProject/obj/
+SiGeP/SiGeP.Model/Migrations/20240923203405_NewMigration.cs
+SiGeP/SiGeP.Model/Migrations/
+SiGeP/SiGeP.slnLaunch.user
