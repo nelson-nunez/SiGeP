@@ -1,0 +1,15 @@
+
+Tutorial
+https://www.youtube.com/watch?v=w5xhZZx031I&list=PL42UNLc8e48RINrNGumxAKulG5CWgs_yv
+
+1) Instalar en VS Installer: Asp.net  Develeopment y NodeJs
+2) Instalar en la pc: https://nodejs.org/es
+	1_ winget install Schniz.fnm
+	2_ fnm install 22
+	//Verify the version:
+	3_ node -v # Should print "v22.14.0".
+	4_ npm -v # Should print "10.9.2".
+		Error permisos:
+			Get-ExecutionPolicy -List
+			Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+	 5_ npm install -g @angular/cli

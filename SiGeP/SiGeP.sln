@@ -13,6 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiGeP.API", "SiGeP.API\SiGe
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución", "Elementos de la solución", "{E0E07D3C-B6FA-4BA4-8145-FA9C6E07A7A1}"
 	ProjectSection(SolutionItems) = preProject
+		Angular.txt = Angular.txt
 		Readme.txt = Readme.txt
 		Readme.UI.txt = Readme.UI.txt
 	EndProjectSection
