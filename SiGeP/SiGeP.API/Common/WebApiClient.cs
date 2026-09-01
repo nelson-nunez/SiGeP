@@ -35,34 +35,6 @@ namespace SiGeP.API.Common
             set { httpClient.BaseAddress = new Uri(value); }
         }
 
-        public async Task AuthenticationJWT(string jwt)
-        {
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
-        }
-
-        public async Task<SigninResponse> AuthenticationJWT(string resource, SigninRequest credentials)
-        {
-            try
-            {
-                var loginAsJson = JsonSerializer.Serialize(credentials);
-                var response = await httpClient.PostAsync("api/Authentication", new StringContent(loginAsJson, Encoding.UTF8, "application/json"));
-                var loginResult = JsonSerializer.Deserialize<SigninResponse>(await response.Content.ReadAsStringAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-
-                if (response.IsSuccessStatusCode)
-                {
-                    return loginResult;
-                }
-
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", loginResult.AccessToken);
-
-                return loginResult;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
         #region GETS
 
         public async Task<object> GetAsync(string resource)

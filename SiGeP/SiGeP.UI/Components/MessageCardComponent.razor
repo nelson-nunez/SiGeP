@@ -1,65 +1,107 @@
-﻿@using SiGeP.UI.Data
-@using Syncfusion.Blazor.Popups
-@using System.Threading
+@using SiGeP.UI.Data
 @inject NavigationManager NavManager
 
-<SfDialog @ref="@Dialog" IsModal="true" Visible="false" Width="500" CssClass="dlg-messageviewer">
-    <DialogTemplates>
-        <Header>
-            <div class="row my-auto">
-                <img class="rounded float-left pull-left  p-2 mx-2" src="@ImageRoute" style="max-height: 4rem;" />
-                <h3 class="dlg-messageviewer e-dlg-header float-left pull-left p-2 my-auto"> @Title </h3>
-            </div>
-        </Header>
-        <Content>
+@if (Visible)
+{
+    <div class="dlg-messageviewer-backdrop"></div>
+    <div class="dlg-messageviewer @GetTypeCssClass()" role="dialog">
+        <div class="dlg-messageviewer-header">
+            <img class="rounded float-left pull-left p-2 mx-2" src="@ImageRoute" style="max-height: 4rem;" />
+            <h3 class="dlg-messageviewer-title"> @Title </h3>
+        </div>
+        <div class="dlg-messageviewer-content">
             <p>@Message</p>
-        </Content>
-    </DialogTemplates>
-    <DialogAnimationSettings Effect="DialogEffect.FadeZoom" Duration=400 />
-    <DialogButtons>
-        @{
-            switch (Type)
-            {
-                case MessageTypes.Information:
-                    <button type="button" class="btn btn-primary float-right mt-3" @onclick="@CloseMessage"> <i class="fas fa-check"></i> Continuar </button>
-                    break;
-                case MessageTypes.InformationAction:
-                    <button type="button" class="btn btn-primary float-right mt-3" @onclick="@OnClickAction"> <i class="fas fa-check"></i> Continuar </button>
-                    break;
-                case MessageTypes.Error:
-                case MessageTypes.Warning:
-                    <button type="button" class="btn btn-primary float-right mt-3" @onclick="@CloseMessage"> <i class="fas fa-check"></i> Continuar </button>
-                    break;
-                case MessageTypes.Question:
-                case MessageTypes.Confirmation:
-                    <div class="row mt-3 mx-3 float-right">
-                        <button type="button" class="btn  btn-secondary  ml-2" @onclick="() => OnConfirmationChange(false)"> <i class="fas fa-times"></i> No </button>
-                        <button type="button" class="btn  btn-primary  ml-2" @onclick="() => OnConfirmationChange(true)"> <i class="fas fa-check"></i> Si </button>
-                    </div>
-                    break;
+        </div>
+        <div class="dlg-messageviewer-footer">
+            @{
+                switch (Type)
+                {
+                    case MessageTypes.Information:
+                        <button type="button" class="btn btn-primary float-right mt-3" @onclick="@CloseMessage"> <i class="fas fa-check"></i> Continuar </button>
+                        break;
+                    case MessageTypes.InformationAction:
+                        <button type="button" class="btn btn-primary float-right mt-3" @onclick="@OnClickAction"> <i class="fas fa-check"></i> Continuar </button>
+                        break;
+                    case MessageTypes.Error:
+                    case MessageTypes.Warning:
+                        <button type="button" class="btn btn-primary float-right mt-3" @onclick="@CloseMessage"> <i class="fas fa-check"></i> Continuar </button>
+                        break;
+                    case MessageTypes.Question:
+                    case MessageTypes.Confirmation:
+                        <div class="row mt-3 mx-3 float-right">
+                            <button type="button" class="btn  btn-secondary  ml-2" @onclick="() => OnConfirmationChange(false)"> <i class="fas fa-times"></i> No </button>
+                            <button type="button" class="btn  btn-primary  ml-2" @onclick="() => OnConfirmationChange(true)"> <i class="fas fa-check"></i> Si </button>
+                        </div>
+                        break;
+                }
             }
-        }
-    </DialogButtons>
-</SfDialog>
+        </div>
+    </div>
+}
 
 <!--#region Styles  -->
 <style>
-    .dlg-messageviewer .e-dlg-header {
-        font-size: 20px;
-        font-weight: normal;
-    }
-
-    .dlg-messageviewer .e-dlg-content, .dlg-messageviewer .e-dlg-header-content, .dlg-messageviewer .e-footer-content {
-        border-bottom: 0px;
-        border-top: 0px;
-    }
-
-    .e-dlg-overlay {
+    .dlg-messageviewer-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
         background-color: slategray;
         opacity: 0.6;
+        z-index: 10000;
     }
 
-    .dlg-messageviewer .e-btn.e-flat, .e-css.e-btn.e-flat {
+    .dlg-messageviewer {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 500px;
+        max-width: 95vw;
+        max-height: 90vh;
+        overflow-y: auto;
+        background-color: white;
+        border-radius: 4px;
+        box-shadow: 0 2px 20px rgba(0,0,0,0.4);
+        z-index: 10001;
+        animation: dlg-messageviewer-fadezoom 0.4s ease;
+    }
+
+    @@keyframes dlg-messageviewer-fadezoom {
+        from {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.85);
+        }
+
+        to {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+    }
+
+    .dlg-messageviewer-header {
+        display: flex;
+        align-items: center;
+        padding: 0.5rem 1rem;
+    }
+
+    .dlg-messageviewer-title {
+        font-size: 20px;
+        font-weight: normal;
+        margin: 0;
+    }
+
+    .dlg-messageviewer-content {
+        padding: 0 1rem 1rem 1rem;
+    }
+
+    .dlg-messageviewer-footer {
+        padding: 0 1rem 1rem 1rem;
+        overflow: auto;
+    }
+
+    .dlg-messageviewer .btn.e-flat {
         padding: 10px;
         border-color: transparent;
         background-color: RGB(122,155,232);
@@ -69,72 +111,51 @@
         width: 4rem;
         border-radius: 5px;
     }
-</style>
 
-@{
-    switch (Type)
-    {
-        case MessageTypes.Information:
-            <style>
-                .dlg-messageviewer .e-dlg-header {
-                    color: navy;
-                }
-
-                .dlg-messageviewer, .dlg-messageviewer .e-dlg-content, .dlg-messageviewer .e-dlg-header-content, .dlg-messageviewer .e-footer-content {
-                    background-color: RGB(170,214,239);
-                }
-            </style>
-            break;
-        case MessageTypes.InformationAction:
-            <style>
-                .dlg-messageviewer .e-dlg-header {
-                    color: navy;
-                }
-
-                .dlg-messageviewer, .dlg-messageviewer .e-dlg-content, .dlg-messageviewer .e-dlg-header-content, .dlg-messageviewer .e-footer-content {
-                    background-color: RGB(170,214,239);
-                }
-            </style>
-            break;
-        case MessageTypes.Error:
-            <style>
-                .dlg-messageviewer .e-dlg-header {
-                    color: red !important;
-                }
-                .dlg-messageviewer, .dlg-messageviewer .e-dlg-content, .dlg-messageviewer .e-dlg-header-content, .dlg-messageviewer .e-footer-content {
-                    background-color: RGB(239,170,181) !important;
-                }
-            </style>
-            break;
-        case MessageTypes.Warning:
-            <style>
-                .dlg-messageviewer .e-dlg-header {
-                    color: RGB(204,102,0) !important;
-                }
-
-                .dlg-messageviewer, .dlg-messageviewer .e-dlg-content, .dlg-messageviewer .e-dlg-header-content, .dlg-messageviewer .e-footer-content {
-                    background-color: #fbeaa8 !important;
-                }
-            </style>
-            break;
-        case MessageTypes.Question:
-            <style>
-                .dlg-messageviewer .e-dlg-header {
-                    color: black !important;
-                }
-
-                .dlg-messageviewer, .dlg-messageviewer .e-dlg-content, .dlg-messageviewer .e-dlg-header-content, .dlg-messageviewer .e-footer-content {
-                    background-color: white !important;
-                }
-            </style>
-            break;
+    /* Information / InformationAction */
+    .dlg-messageviewer.dlg-type-information .dlg-messageviewer-title,
+    .dlg-messageviewer.dlg-type-informationaction .dlg-messageviewer-title {
+        color: navy;
     }
-}
+
+    .dlg-messageviewer.dlg-type-information,
+    .dlg-messageviewer.dlg-type-informationaction {
+        background-color: RGB(170,214,239);
+    }
+
+    /* Error */
+    .dlg-messageviewer.dlg-type-error .dlg-messageviewer-title {
+        color: red !important;
+    }
+
+    .dlg-messageviewer.dlg-type-error {
+        background-color: RGB(239,170,181) !important;
+    }
+
+    /* Warning */
+    .dlg-messageviewer.dlg-type-warning .dlg-messageviewer-title {
+        color: RGB(204,102,0) !important;
+    }
+
+    .dlg-messageviewer.dlg-type-warning {
+        background-color: #fbeaa8 !important;
+    }
+
+    /* Question / Confirmation */
+    .dlg-messageviewer.dlg-type-question .dlg-messageviewer-title,
+    .dlg-messageviewer.dlg-type-confirmation .dlg-messageviewer-title {
+        color: black !important;
+    }
+
+    .dlg-messageviewer.dlg-type-question,
+    .dlg-messageviewer.dlg-type-confirmation {
+        background-color: white !important;
+    }
+</style>
 <!--#endregion -->
+
 @code {
     #region Vars
-
-    public SfDialog Dialog { get; set; }
 
     public string Title { get; set; }
 
@@ -162,7 +183,7 @@
         }
     }
 
-    public async Task ShowMessage(string type, string message, string title = "", string url = "")
+    public Task ShowMessage(string type, string message, string title = "", string url = "")
     {
         switch (type)
         {
@@ -198,9 +219,11 @@
         Type = type;
         Message = message;
         Url = url;
+        Visible = true;
 
-        await Dialog.ShowAsync();
         StateHasChanged();
+
+        return Task.CompletedTask;
     }
 
     #endregion
@@ -215,7 +238,7 @@
 
     public void CloseMessage()
     {
-        Dialog.HideAsync();
+        Visible = false;
         StateHasChanged();
     }
 
@@ -226,6 +249,20 @@
     {
         CloseMessage();
         await ConfirmationChanged.InvokeAsync(value);
+    }
+
+    private string GetTypeCssClass()
+    {
+        return Type switch
+        {
+            MessageTypes.Information => "dlg-type-information",
+            MessageTypes.InformationAction => "dlg-type-informationaction",
+            MessageTypes.Confirmation => "dlg-type-confirmation",
+            MessageTypes.Question => "dlg-type-question",
+            MessageTypes.Warning => "dlg-type-warning",
+            MessageTypes.Error => "dlg-type-error",
+            _ => string.Empty
+        };
     }
 
     #endregion

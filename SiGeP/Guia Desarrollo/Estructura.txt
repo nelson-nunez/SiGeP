@@ -1,0 +1,265 @@
+================================================================================
+ESTRUCTURA DEL PROYECTO - SiGeP (Sistema de Gestion de Pacientes)
+Generado: 2026-09-01
+================================================================================
+
+Solucion .NET 8.0 organizada en arquitectura por capas, con 5 proyectos dentro
+de SiGeP.sln. Las dependencias fluyen siempre hacia abajo:
+
+    SiGeP.UI -> SiGeP.API -> SiGeP.Business -> SiGeP.DataAccess -> SiGeP.Model
+
+(Nota: se excluyen de este listado las carpetas de artefactos de compilacion
+ bin/, obj/, .vs/ y los binarios de terceros dentro de wwwroot/, ya que no son
+ codigo fuente del proyecto.)
+
+================================================================================
+RAIZ DE LA SOLUCION
+================================================================================
+SiGeP/
+├── SiGeP.sln                    Archivo de solucion (agrupa los 5 proyectos)
+├── ReadmeArquitecture.md        Descripcion de la arquitectura y convenciones
+├── Readme.txt                   Bitacora de pasos seguidos al iniciar el proyecto
+│                                 (API, EF Core, UnitOfWork, AutoMapper, JWT, Serilog)
+├── Readme.UI.txt                Bitacora de configuracion de la UI Blazor Server
+│                                 (Syncfusion, Identity, FluentValidation)
+├── Angular.txt                  Notas sobre un posible frontend alternativo en Angular
+│                                 (tutorial de referencia, no implementado aun)
+├── GuiadeClases.vsdx             Diagrama de clases (Visio)
+├── .dockerignore
+└── Documentacion/
+    └── Estructura.txt            Este archivo
+
+================================================================================
+SiGeP.Model  -  Entidades de dominio, DTOs y acceso a datos con EF Core
+================================================================================
+SiGeP.Model/
+├── SiGeP.Model.csproj
+├── DbModelContext.cs             DbContext principal (EF Core 8, lazy loading vía
+│                                  proxies, filtros globales de borrado logico)
+├── DbSetEntities.cs               Declaracion de los DbSet<> del contexto
+├── DbContextExtension.cs
+│
+├── Base/                          Infraestructura base de entidades
+│   ├── Base.cs                    BaseEntity: Id + auditoria (Created/Updated/Deleted)
+│   ├── IEntity.cs
+│   ├── ISoftDelete.cs              Contrato de borrado logico
+│   ├── PagedDataResponse.cs
+│   └── PagingSortFilterRequest.cs
+│
+├── BaseDTO/                        DTOs base compartidos
+│   ├── ActionResultDTO.cs
+│   ├── BaseEntityDTO.cs
+│   └── ExceptionDTO.cs
+│
+├── DTO/                             DTOs especificos por entidad
+│   ├── AddressDTO.cs
+│   ├── AppointmentDTO.cs
+│   ├── CustomerDTO.cs
+│   ├── DoctorDTO.cs
+│   ├── GenderDTO.cs
+│   └── PersonDTO.cs
+│
+├── Model/                           Entidades de dominio
+│   ├── Address/
+│   │   ├── Address.cs
+│   │   ├── City.cs
+│   │   ├── Neighborhood.cs
+│   │   └── Province.cs
+│   ├── Person/
+│   │   └── Person.cs
+│   ├── Appointment.cs               Turnos
+│   ├── Customer.cs                  Pacientes
+│   ├── Doctor.cs                    Medicos
+│   ├── Gender.cs
+│   ├── MedicalRecord.cs             Historia clinica
+│   ├── Payment.cs                   Pagos
+│   └── Reminder.cs                  Recordatorios
+│
+├── ModelUser/                       Entidades de usuarios/seguridad
+│   ├── AppUser.cs
+│   └── Role.cs
+│
+└── Extensions/
+    ├── EntityFrameworkExtension.cs
+    └── ExpressionBuilder.cs
+
+(Aun no existen migraciones de EF Core generadas en Migrations/.)
+
+================================================================================
+SiGeP.DataAccess  -  Patron Repository + Unit of Work
+================================================================================
+SiGeP.DataAccess/
+├── SiGeP.DataAccess.csproj
+├── Generic/
+│   ├── GenericRepository.cs        Repositorio generico: CRUD, paginacion, SQL raw
+│   └── UnitOfWork.cs                Coordina transacciones y timestamps de auditoria
+│
+└── Repositories/                    Repositorios especificos (extienden el generico)
+    ├── AddRepositories.cs           Registro de repositorios (inyeccion de dependencias)
+    ├── AppUserRepository.cs
+    ├── AppointmentRepository.cs
+    ├── CityRepository.cs
+    ├── CustomerRepository.cs
+    ├── DoctorRepository.cs
+    ├── GenderRepository.cs
+    ├── NeighborhoodRepository.cs
+    ├── ProvinceRepository.cs
+    └── ReminderRepository.cs
+
+================================================================================
+SiGeP.Business  -  Reglas de negocio
+================================================================================
+SiGeP.Business/
+├── SiGeP.Business.csproj
+├── Base/
+│   └── BusinessBase.cs              Clase base de la que heredan las clases de negocio
+│
+├── Interfaces/
+│   ├── IBusiness.cs
+│   ├── IObserver.cs                 Patron Observer
+│   └── ISubject.cs
+│
+├── Notifiers/                        Implementacion del patron Observer
+│   ├── Notifier.cs                  Subject: dispara notificaciones
+│   ├── PaymentObserver.cs           Notificaciones de pagos
+│   └── ReminderObserver.cs          Notificaciones de turnos/recordatorios
+│
+├── AppointmentBusiness.cs           Turnos
+├── AuthenticationBusiness.cs        Login / autenticacion
+├── CityBusiness.cs
+├── CustomerBusiness.cs              Pacientes
+├── DoctorBusiness.cs                Medicos
+├── GenderBusiness.cs
+├── NeighborhoodBusiness.cs
+├── ProvinceBusiness.cs
+└── ReminderBusiness.cs
+
+================================================================================
+SiGeP.API  -  API REST (ASP.NET Core, JWT, AutoMapper, Serilog)
+================================================================================
+SiGeP.API/
+├── SiGeP.API.csproj / .csproj.user
+├── Program.cs                       Punto de entrada, pipeline de la app
+├── ServiceExtension.cs              Registro de servicios (DI)
+├── Dockerfile
+│
+├── Controllers/                     Endpoints REST (protegidos con JWT Bearer)
+│   ├── AddressController.cs
+│   ├── AppointmentController.cs
+│   ├── AuthenticationController.cs
+│   ├── CustomerController.cs
+│   ├── DoctorController.cs
+│   └── GenderController.cs
+│
+├── Common/                           Infraestructura comun de la API
+│   ├── AppConfiguration.cs
+│   ├── BaseController.cs
+│   ├── BusinessException.cs
+│   ├── IJwtAuthManager.cs
+│   ├── ServiceExtensions.cs
+│   ├── WebApiClient.cs               Cliente HTTP generico (consumido por SiGeP.UI)
+│   └── WebApiClientExt2.cs
+│
+├── Common.Model/                     Modelos de autenticacion y configuracion
+│   ├── JwtAuthResult.cs
+│   ├── JwtTokenConfig.cs
+│   ├── RefreshToken.cs
+│   ├── RemoteBusinessException.cs
+│   ├── RemoteUnknowException.cs
+│   ├── SigninRequest.cs
+│   ├── SigninResponse.cs
+│   ├── UserContext.cs
+│   └── WebApiConfig.cs
+│
+├── LogConfiguration/                  Logging con Serilog
+│   ├── ExceptionHandlingMiddleware.cs Middleware de captura y enriquecimiento de errores
+│   └── SerilogConfiguration.cs
+│
+├── Mapper/
+│   └── AutoMapperProfile.cs           Mapeos Entidad <-> DTO
+│
+├── Properties/
+│   └── launchSettings.json
+│
+├── appsettings.json
+└── appsettings.Development.json
+
+================================================================================
+SiGeP.UI  -  Frontend Blazor Server (Syncfusion, Identity, FluentValidation)
+================================================================================
+SiGeP.UI/
+├── SiGeP.UI.csproj / .csproj.user
+├── Program.cs
+├── ServiceExtension.cs
+├── App.razor
+├── _Imports.razor
+├── Dockerfile
+├── appsettings.json / appsettings.Development.json
+│
+├── Areas/Identity/                    ASP.NET Core Identity (scaffolded)
+│   ├── IdentityHostingStartup.cs
+│   └── Pages/Account/                 Login, Logout, Register, Reset/Forgot password,
+│                                       confirmacion de email
+│
+├── Components/                         Componentes Razor reutilizables
+│   ├── ABMComponent.razor             Componente central: listado/alta/baja/modif.
+│   │                                   generico, base para cualquier pantalla CRUD
+│   ├── ActionButtonComponent.razor
+│   ├── LoginRedirect.razor
+│   ├── MessageCardComponent.razor
+│   └── PatientsListComponent.razor
+│
+├── Pages/                               Paginas de la aplicacion
+│   ├── Index.razor
+│   ├── CustomerCRUD.razor             Pantalla CRUD de pacientes (usa ABMComponent)
+│   ├── Identity/Login.razor
+│   ├── Error.cshtml / Error.cshtml.cs
+│   └── Shared/                        _Layout, _LoginPartial, _ValidationScriptsPartial
+│
+├── Shared/                              Layout general de la app
+│   ├── MainLayout.razor / .razor.css
+│   └── NavMenu.razor / .razor.css
+│
+├── Data/                                Modelos y utilitarios de la UI
+│   ├── ApplicationDbContext.cs         DbContext de Identity
+│   ├── InputModel.cs
+│   ├── MessageTypes.cs
+│   ├── MessageViewerEventArgs.cs
+│   ├── SyncfusionLocalizer.cs
+│   ├── ViewMode.cs
+│   └── reCAPTCHAVerificationOptions.cs
+│
+├── Services/
+│   ├── AuthenticationService.cs        Consume la API para login/refresh token
+│   └── ProvincesService.cs
+│
+├── Helpers/                              Validacion en cliente (FluentValidation)
+│   ├── FluentValidator.cs
+│   └── LoginInputValidator.cs
+│
+├── Extensions/
+│   └── Extensions.cs
+│
+├── Resources/                             Recursos de localizacion (Syncfusion)
+│   ├── SfResources.resx
+│   └── SfResources.Designer.cs
+│
+├── Properties/
+│   └── launchSettings.json
+│
+└── wwwroot/                                 Recursos estaticos
+    ├── css/                                 Bootstrap, Syncfusion, FontAwesome, site.css
+    ├── images/
+    └── scripts/scripts.js
+
+================================================================================
+RESUMEN POR CAPA
+================================================================================
+Model        Entidades, DTOs, DbContext (EF Core 8)
+DataAccess   Repository + Unit of Work
+Business     Reglas de negocio, validaciones, patron Observer
+API          Controladores REST, JWT, AutoMapper, Serilog
+UI           Blazor Server, Syncfusion, Identity, FluentValidation
+
+Para el detalle de responsabilidades de cada capa y el flujo a seguir al agregar
+una nueva entidad al sistema, ver ReadmeArquitecture.md en la raiz del proyecto.

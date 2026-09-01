@@ -9,20 +9,19 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Serilog;
 using Serilog.Events;
-using Serilog.Enrichers;
 using SiGeP.DataAccess.Generic;
 using SiGeP.DataAccess.Repositories;
 using SiGeP.Business;
 
 var builder = WebApplication.CreateBuilder(args);
 
-#region Configuración de Serilog
+#region Configuraciï¿½n de Serilog
 
-//var configuration = new ConfigurationBuilder()
-//    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-//    .Build();
+var configuration = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+    .Build();
 
-//var connectionStringSection = configuration.GetSection("ConnectionStrings:LogsConnection");
+var connectionStringSection = configuration.GetSection("ConnectionStrings");
 
 //Log.Logger = new LoggerConfiguration()
 //    .MinimumLevel.Debug()
@@ -38,13 +37,13 @@ var builder = WebApplication.CreateBuilder(args);
 //        columnOptions: SerilogConfiguration.GetColumnOptions())
 //    .CreateLogger();
 
-//// Configurar Serilog como proveedor de logs
-//builder.Host.UseSerilog();
+// Configurar Serilog como proveedor de logs
+builder.Host.UseSerilog();
 
 #endregion
 
 #region Agregar servicios al contenedor
- 
+
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
@@ -128,8 +127,6 @@ builder.Services.AddDataAccessServices();
 
 builder.Services.AddBusinessServices();
 
-builder.Services.AddInfraestructureServices();
-
 var app = builder.Build();
 
 #endregion
@@ -145,8 +142,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-//app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseRouting();
 

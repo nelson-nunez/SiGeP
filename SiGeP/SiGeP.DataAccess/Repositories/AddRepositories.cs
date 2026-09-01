@@ -31,8 +31,7 @@ namespace SiGeP.DataAccess.Repositories
                 { typeof(Neighborhood), new NeighborhoodRepository(_context) },
                 { typeof(Province), new ProvinceRepository(_context) },
                 //Turnos
-                { typeof(Appointment), new AppointmentRepository(_context) },
-                { typeof(Reminder), new ReminderRepository(_context) }
+                { typeof(Appointment), new AppointmentRepository(_context) }
             };
         }
 

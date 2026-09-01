@@ -1,0 +1,34 @@
+Necesito que generes y apliques una nueva migración de Entity Framework Core en este proyecto 
+(SiGeP), siguiendo el mismo esquema que usamos en la migración inicial.
+
+Contexto del proyecto:
+- Proyecto donde vive el modelo/DbContext: SiGeP.Model
+- Contexto: DbModelContext
+- Proyecto de arranque (startup): SiGeP.API
+
+En Visual Studio (Package Manager Console) esto se hizo así:
+  Add-Migration InitialCreate -Project SiGeP.Model -Context DbModelContext -StartupProject SiGeP.API
+  Update-Database -Project SiGeP.Model -Context DbModelContext -StartupProject SiGeP.API
+
+Como vos trabajás desde la terminal, usá los comandos equivalentes de la CLI de dotnet-ef:
+  dotnet ef migrations add NOMBRE_MIGRACION --project SiGeP.Model --startup-project SiGeP.API --context DbModelContext
+  dotnet ef database update --project SiGeP.Model --startup-project SiGeP.API --context DbModelContext
+
+Nombre de esta migración: "NOMBRE_MIGRACION" (reemplazar por un nombre descriptivo en PascalCase 
+que resuma el cambio, ej: AddClienteTelefono, CreateTablaAuditoria, etc.)
+
+Pasos que quiero que sigas:
+1. Verificá que la herramienta dotnet-ef esté disponible (dotnet tool list / dotnet ef --version). 
+   Si no está instalada, instalala con: dotnet tool install --global dotnet-ef 
+   (o dotnet tool update --global dotnet-ef si ya existe pero está desactualizada).
+2. Revisá las entidades/clases modificadas recientemente en SiGeP.Model para confirmar qué cambios 
+   de esquema se esperan reflejar en la migración.
+3. Ejecutá el comando de "add migration" con el nombre indicado arriba.
+4. Mostrame el contenido generado (Up/Down) del archivo de migración antes de aplicarla, para que 
+   yo lo revise.
+5. Solo después de mi confirmación, ejecutá el "database update" contra la base de datos.
+6. Si el comando falla, mostrame el error completo y no reintentes cambiando la estrategia sin 
+   consultarme (por ejemplo, no borres migraciones anteriores ni la base de datos).
+7. Al finalizar, indicame qué tablas/columnas se crearon o modificaron como resultado de esta migración.
+
+No apliques la migración a la base de datos sin que yo confirme explícitamente el contenido generado.

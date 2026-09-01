@@ -1,9 +1,47 @@
 ﻿@page "/"
 @attribute [Authorize]
 
+
+@using SiGeP.UI.Data
+
+
 <div class="row text-center mx-auto" style="min-height:80vh;">
     <div style ="margin-bottom: 0px">
         <h1>SISTEMA DE GESTION DE PACIENTES</h1>
     </div>
+	<button type="button" tabindex="3" @onclick="DoAnything">
+		Ingresar
+	</button>
+    
     <img runat="server" src="Images/logo.png" class="img-fluid align-self-center mx-auto" href="~/" style="max-width: 30rem">
 </div>
+
+
+
+
+@code {
+    #region Vars
+
+    public bool enabled { get; set; }
+    
+    [CascadingParameter]
+    public MainLayout mainLayoutObj { get; set; }
+    
+    #endregion
+
+    protected async Task DoAnything()
+    {
+        try
+        {
+             throw new Exception("valio verga");
+        }
+        catch (Exception ex)
+        {
+            await mainLayoutObj.ShowCardMessage(MessageTypes.Error, ex.Message);
+        }
+        finally
+        {
+            await mainLayoutObj.HideSpinner();
+        }
+    }
+}

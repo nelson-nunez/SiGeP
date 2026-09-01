@@ -2,7 +2,6 @@
 using SiGeP.Model.DTO;
 using SiGeP.Model.Model;
 using SiGeP.Model.Model.Address;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SiGeP.API.Mapper
 {

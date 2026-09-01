@@ -1,5 +1,4 @@
 ﻿using SiGeP.Business.Base;
-using SiGeP.Business.Notifiers;
 using SiGeP.DataAccess.Generic;
 using SiGeP.Model.Base;
 using SiGeP.Model.Model;
@@ -49,20 +48,6 @@ namespace SiGeP.Business
 
                 #endregion
 
-                #region Observer
-
-                //// Crear instancia de Notifier<Appointment>
-                //var appointmentNotifier = new Notifier<Appointment>();
-
-                //// Crear y adjuntar observadores
-                //var reminderObserver = new ReminderObserver();
-                //var paymentObserver = new PaymentObserver();
-
-                //appointmentNotifier.Attach(reminderObserver);
-                ////appointmentNotifier.Attach(paymentObserver);
-
-                #endregion
-
                 // Guardar la cita en la base de datos
                 if (entity.Id == 0)
                     await unitOfWork.AddRepositories.GetRepository<Appointment>().AddAsync(entity);
@@ -70,9 +55,6 @@ namespace SiGeP.Business
                      unitOfWork.AddRepositories.GetRepository<Appointment>().Update(entity);
 
                 await unitOfWork.CompleteAsync();
-
-                // Notificar a los observadores después de la creación/actualización
-                //appointmentNotifier.Notify(entity);
 
                 return entity.Id;
             }

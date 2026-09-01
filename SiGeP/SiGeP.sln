@@ -11,16 +11,23 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiGeP.Model", "SiGeP.Model\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiGeP.API", "SiGeP.API\SiGeP.API.csproj", "{91B4856D-68BD-4D06-A2CE-909BB0B5A059}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución", "Elementos de la solución", "{E0E07D3C-B6FA-4BA4-8145-FA9C6E07A7A1}"
-	ProjectSection(SolutionItems) = preProject
-		Angular.txt = Angular.txt
-		Readme.txt = Readme.txt
-		Readme.UI.txt = Readme.UI.txt
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiGeP.UI", "SiGeP.UI\SiGeP.UI.csproj", "{1554D995-3432-4A54-BA32-0AD1187F9BA7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiGeP.UnitTestProject", "TestProject\SiGeP.UnitTestProject.csproj", "{4A3D60ED-C21D-4378-9EBB-B02BA7C17064}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentacion", "Documentacion", "{334CC066-14E4-49B6-A824-30CC843958F7}"
+	ProjectSection(SolutionItems) = preProject
+		Documentacion\Angular.txt = Documentacion\Angular.txt
+		Documentacion\GuiadeClases.vsdx = Documentacion\GuiadeClases.vsdx
+		Documentacion\Readme.txt = Documentacion\Readme.txt
+		Documentacion\Readme.UI.txt = Documentacion\Readme.UI.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Guia Desarrollo", "Guia Desarrollo", "{5F63E594-332A-4A91-97B3-AECC86C6F78A}"
+	ProjectSection(SolutionItems) = preProject
+		Guia Desarrollo\Estructura.txt = Guia Desarrollo\Estructura.txt
+		Guia Desarrollo\ReadmeArquitecture.md = Guia Desarrollo\ReadmeArquitecture.md
+		Prompt Migracion.txt = Prompt Migracion.txt
+		Prompts.txt = Prompts.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,10 +55,6 @@ Global
 		{1554D995-3432-4A54-BA32-0AD1187F9BA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1554D995-3432-4A54-BA32-0AD1187F9BA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1554D995-3432-4A54-BA32-0AD1187F9BA7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4A3D60ED-C21D-4378-9EBB-B02BA7C17064}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4A3D60ED-C21D-4378-9EBB-B02BA7C17064}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4A3D60ED-C21D-4378-9EBB-B02BA7C17064}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4A3D60ED-C21D-4378-9EBB-B02BA7C17064}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

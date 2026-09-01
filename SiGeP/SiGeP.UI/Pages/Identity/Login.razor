@@ -188,6 +188,7 @@
     {
         try
         {
+			// throw new Exception("valio verga");
             input.UserName = input.UserName.Replace(" ", String.Empty);
             input.Password = input.Password.Replace(" ", String.Empty);
             if (string.IsNullOrEmpty(input.UserName) || string.IsNullOrEmpty(input.Password))
@@ -210,6 +211,7 @@
             }
 
             #endregion
+
         }
         catch (Exception ex)
         {

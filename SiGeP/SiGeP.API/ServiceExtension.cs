@@ -6,10 +6,6 @@ namespace SiGeP.API
 {
     public static class ServiceExtension
     {
-        public static void AddInfraestructureServices(this IServiceCollection services)
-        {
-        }
-
         public static void AddDataAccessServices(this IServiceCollection services)
         {
             services.AddScoped<UnitOfWork, UnitOfWork>();

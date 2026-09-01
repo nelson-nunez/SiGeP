@@ -1,0 +1,73 @@
+Quiero que actualices el archivo ReadmeArquitectura.md de este proyecto. Es un documento vivo que se debe 
+leer antes de encarar cualquier tarea de desarrollo, así que necesito que sea preciso, completo y basado 
+100% en el relevamiento real del código (no en supuestos ni en el contenido previo si está desactualizado).
+
+Seguí estos pasos:
+
+## 1. Relevamiento de estructura
+- Recorré todo el árbol de carpetas del proyecto (backend, frontend, scripts, configs, etc.).
+- Identificá cómo está organizado: por capas, por features, por módulos, etc.
+- Determiná dónde vive cada tipo de artefacto: controllers, services, repositories, DTOs, 
+  entidades/modelos, validadores, middlewares, pantallas/vistas, componentes UI, estilos, 
+  utils, tests, configuración.
+
+## 2. Relevamiento de tecnologías
+- Revisá archivos de dependencias (package.json, .csproj, requirements.txt, pom.xml, etc.) para 
+  listar frameworks, librerías y sus versiones (backend, frontend, ORM, base de datos, testing, 
+  build tools).
+- Identificá el runtime/lenguaje y versión.
+
+## 3. Arquitectura y paradigmas
+- Determiná qué estilo arquitectónico se usa (en capas, hexagonal, MVC, Clean Architecture, etc.).
+- Identificá patrones de diseño realmente implementados (Repository, Factory, Singleton, DTO, 
+  Strategy, Observer, Dependency Injection, etc.) citando ejemplos concretos de archivos del código.
+- Identificá paradigmas dominantes (OOP, funcional, mixto) y cómo se aplican.
+- Describí cómo se desacopla el código (interfaces, inyección de dependencias, capas separadas, 
+  eventos, etc.).
+
+## 4. Seguridad y autenticación
+- Explicá cómo se autentica el usuario (JWT, sesiones, OAuth, cookies, etc.) y dónde está 
+  implementado ese flujo.
+- Explicá cómo se autoriza cada endpoint (roles, políticas, atributos/decorators/guards) y 
+  mostrá un ejemplo real de un endpoint protegido.
+- Indicá dónde está centralizada la configuración de seguridad (middlewares, filtros, archivos 
+  de config).
+
+## 5. Convenciones de código
+- Relevá el estilo de escritura real del código: nomenclatura de clases/métodos/variables, 
+  indentación, comentarios, manejo de errores, logging.
+- Para cada tipo de clase (Controller, Service, Repository, DTO, Entity, Componente UI, etc.) 
+  armá una plantilla/esqueleto basada en ejemplos reales existentes, mostrando su estructura 
+  típica (qué secciones tiene, qué convenciones sigue).
+
+## 6. Frontend / UI
+- Listá las pantallas y componentes actuales y para qué sirve cada uno.
+- Describí la jerarquía/herencia o composición de componentes (componentes base, layouts, 
+  componentes compartidos vs específicos).
+- Explicá manejo de estado, routing y convención de nombres/ubicación de archivos de UI.
+
+## 7. Comparación con el ReadmeArquitectura.md actual
+- Leé el archivo ReadmeArquitectura.md existente.
+- Marcá qué contenido sigue vigente, qué está desactualizado y qué falta según lo relevado.
+
+## 8. Generación del nuevo archivo
+Con todo lo anterior, reescribí ReadmeArquitectura.md con esta estructura:
+
+1. Resumen general del proyecto
+2. Stack tecnológico (con versiones)
+3. Estructura de carpetas y dónde ubicar cada tipo de archivo nuevo
+4. Arquitectura, paradigmas y patrones de diseño (con ejemplos citando archivos)
+5. Seguridad: autenticación y autorización por endpoint
+6. Convenciones de código y estilo
+7. Plantillas de clases por tipo (Controller, Service, Repository, DTO, Entity, Componente UI, etc.)
+8. Frontend: pantallas, componentes, jerarquía/herencia, manejo de estado
+9. Guía de uso: cómo leer este documento antes de escribir un prompt/tarea nueva, y checklist 
+   rápido para ubicar dónde va cada cosa nueva
+
+Reglas:
+- No inventes nada: todo debe basarse en el código real relevado. Si algo no se puede determinar 
+  con certeza, marcalo como "TODO: revisar" en vez de suponer.
+- Usá ejemplos concretos con rutas de archivo reales.
+- Escribí en formato Markdown, con títulos claros y tabla de contenidos al inicio.
+- Al finalizar, guardá una copia del archivo anterior como ReadmeArquitectura.backup.md antes de 
+  sobreescribir.
