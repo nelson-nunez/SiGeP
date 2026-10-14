@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" width="1200" height="360" role="img" aria-labelledby="t d">
+  <title id="t">SiGeP - Sistema de Gestión de Pacientes</title>
+  <desc id="d">Banner con el nombre SiGeP, una línea de pulso cardíaco y las cinco capas de la solución .NET 8.</desc>
+  <style>
+    :root { --bg:#f4fbfa; --bg2:#d9f2ee; --ink:#0b2b2e; --mute:#4a6b6e; --pri:#0e8f86; --acc:#e5484d; --card:#ffffff; --line:#b7dcd8; }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg:#0b1d20; --bg2:#10302f; --ink:#e8f6f4; --mute:#8fb3b3; --pri:#2fd0c3; --acc:#ff6b6f; --card:#112a2c; --line:#1f4a4a; }
+    }
+    text { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    .title { font-size: 92px; font-weight: 800; fill: var(--ink); letter-spacing: -2px; }
+    .title tspan { fill: var(--pri); }
+    .sub { font-size: 28px; fill: var(--mute); }
+    .chip { font-size: 20px; font-weight: 600; fill: var(--ink); }
+    .chipbox { fill: var(--card); stroke: var(--line); stroke-width: 2; }
+    .pulse { fill: none; stroke: var(--acc); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1400; stroke-dashoffset: 0; animation: draw 4s ease-out infinite; }
+    .arrow { fill: var(--mute); font-size: 20px; }
+    @keyframes draw { from { stroke-dashoffset: 1400; } 60%, to { stroke-dashoffset: 0; } }
+    @media (prefers-reduced-motion: reduce) { .pulse { animation: none; } }
+  </style>
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="var(--bg)"/><stop offset="1" stop-color="var(--bg2)"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="360" rx="24" fill="url(#g)"/>
+  <rect x="1.5" y="1.5" width="1197" height="357" rx="23" fill="none" stroke="var(--line)" stroke-width="3"/>
+
+  <!-- cruz médica -->
+  <g transform="translate(72 64)">
+    <rect width="76" height="76" rx="18" fill="var(--pri)"/>
+    <path d="M32 16h12v16h16v12H44v16H32V44H16V32h16z" fill="#fff"/>
+  </g>
+
+  <text x="172" y="132" class="title">Si<tspan>GeP</tspan></text>
+  <text x="72" y="192" class="sub">Sistema de Gestión de Pacientes: turnos, historias clínicas y pagos.</text>
+
+  <!-- pulso -->
+  <polyline class="pulse" points="72,246 330,246 370,246 392,196 424,296 452,226 474,246 1128,246"/>
+
+  <!-- capas -->
+  <g transform="translate(72 290)">
+    <rect class="chipbox" width="150" height="44" rx="22"/><text class="chip" x="75" y="29" text-anchor="middle">Model</text>
+    <text class="arrow" x="160" y="29">→</text>
+    <rect class="chipbox" x="190" width="190" height="44" rx="22"/><text class="chip" x="285" y="29" text-anchor="middle">DataAccess</text>
+    <text class="arrow" x="390" y="29">→</text>
+    <rect class="chipbox" x="420" width="160" height="44" rx="22"/><text class="chip" x="500" y="29" text-anchor="middle">Business</text>
+    <text class="arrow" x="590" y="29">→</text>
+    <rect class="chipbox" x="620" width="120" height="44" rx="22"/><text class="chip" x="680" y="29" text-anchor="middle">API</text>
+    <text class="arrow" x="750" y="29">→</text>
+    <rect class="chipbox" x="780" width="120" height="44" rx="22"/><text class="chip" x="840" y="29" text-anchor="middle">UI</text>
+    <text class="chip" x="930" y="29" style="fill:var(--mute)">.NET 8</text>
+  </g>
+</svg>
