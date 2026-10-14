@@ -15,18 +15,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiGeP.UI", "SiGeP.UI\SiGeP.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentacion", "Documentacion", "{334CC066-14E4-49B6-A824-30CC843958F7}"
 	ProjectSection(SolutionItems) = preProject
-		Documentacion\Angular.txt = Documentacion\Angular.txt
+		Documentacion\Angular.md = Documentacion\Angular.md
 		Documentacion\GuiadeClases.vsdx = Documentacion\GuiadeClases.vsdx
-		Documentacion\Readme.txt = Documentacion\Readme.txt
-		Documentacion\Readme.UI.txt = Documentacion\Readme.UI.txt
+		Documentacion\Readme.md = Documentacion\Readme.md
+		Documentacion\Readme.UI.md = Documentacion\Readme.UI.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Guia Desarrollo", "Guia Desarrollo", "{5F63E594-332A-4A91-97B3-AECC86C6F78A}"
 	ProjectSection(SolutionItems) = preProject
-		Guia Desarrollo\Estructura.txt = Guia Desarrollo\Estructura.txt
+		Guia Desarrollo\Estructura.md = Guia Desarrollo\Estructura.md
 		Guia Desarrollo\ReadmeArquitecture.md = Guia Desarrollo\ReadmeArquitecture.md
-		Prompt Migracion.txt = Prompt Migracion.txt
-		Prompts.txt = Prompts.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución", "Elementos de la solución", "{63A380AC-3E3E-4E8C-ABA2-82C01E43C7CA}"
+	ProjectSection(SolutionItems) = preProject
+		CLAUDE.md = CLAUDE.md
 	EndProjectSection
 EndProject
 Global

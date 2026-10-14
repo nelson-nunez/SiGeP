@@ -1,37 +1,38 @@
-================================================================================
-ESTRUCTURA DEL PROYECTO - SiGeP (Sistema de Gestion de Pacientes)
-Generado: 2026-09-01
-================================================================================
+# Estructura del Proyecto — SiGeP (Sistema de Gestión de Pacientes)
 
-Solucion .NET 8.0 organizada en arquitectura por capas, con 5 proyectos dentro
-de SiGeP.sln. Las dependencias fluyen siempre hacia abajo:
+> Generado: 2026-09-01
 
-    SiGeP.UI -> SiGeP.API -> SiGeP.Business -> SiGeP.DataAccess -> SiGeP.Model
+## Arquitectura general
 
-(Nota: se excluyen de este listado las carpetas de artefactos de compilacion
- bin/, obj/, .vs/ y los binarios de terceros dentro de wwwroot/, ya que no son
- codigo fuente del proyecto.)
+Solución .NET 8.0 organizada en arquitectura por capas, con 5 proyectos dentro de `SiGeP.sln`. Las dependencias fluyen siempre hacia abajo:
 
-================================================================================
-RAIZ DE LA SOLUCION
-================================================================================
+```
+SiGeP.UI -> SiGeP.API -> SiGeP.Business -> SiGeP.DataAccess -> SiGeP.Model
+```
+
+> **Nota:** se excluyen de este listado las carpetas de artefactos de compilación (`bin/`, `obj/`, `.vs/`) y los binarios de terceros dentro de `wwwroot/`, ya que no son código fuente del proyecto.
+
+## Raíz de la solución
+
+```
 SiGeP/
 ├── SiGeP.sln                    Archivo de solucion (agrupa los 5 proyectos)
 ├── ReadmeArquitecture.md        Descripcion de la arquitectura y convenciones
-├── Readme.txt                   Bitacora de pasos seguidos al iniciar el proyecto
+├── Readme.md                    Bitacora de pasos seguidos al iniciar el proyecto
 │                                 (API, EF Core, UnitOfWork, AutoMapper, JWT, Serilog)
-├── Readme.UI.txt                Bitacora de configuracion de la UI Blazor Server
+├── Readme.UI.md                 Bitacora de configuracion de la UI Blazor Server
 │                                 (Syncfusion, Identity, FluentValidation)
-├── Angular.txt                  Notas sobre un posible frontend alternativo en Angular
+├── Angular.md                   Notas sobre un posible frontend alternativo en Angular
 │                                 (tutorial de referencia, no implementado aun)
 ├── GuiadeClases.vsdx             Diagrama de clases (Visio)
 ├── .dockerignore
-└── Documentacion/
-    └── Estructura.txt            Este archivo
+└── Guia Desarrollo/
+    └── Estructura.md             Este archivo
+```
 
-================================================================================
-SiGeP.Model  -  Entidades de dominio, DTOs y acceso a datos con EF Core
-================================================================================
+## SiGeP.Model — Entidades de dominio, DTOs y acceso a datos con EF Core
+
+```
 SiGeP.Model/
 ├── SiGeP.Model.csproj
 ├── DbModelContext.cs             DbContext principal (EF Core 8, lazy loading vía
@@ -82,12 +83,13 @@ SiGeP.Model/
 └── Extensions/
     ├── EntityFrameworkExtension.cs
     └── ExpressionBuilder.cs
+```
 
-(Aun no existen migraciones de EF Core generadas en Migrations/.)
+> Aún no existen migraciones de EF Core generadas en `Migrations/`.
 
-================================================================================
-SiGeP.DataAccess  -  Patron Repository + Unit of Work
-================================================================================
+## SiGeP.DataAccess — Patrón Repository + Unit of Work
+
+```
 SiGeP.DataAccess/
 ├── SiGeP.DataAccess.csproj
 ├── Generic/
@@ -105,10 +107,11 @@ SiGeP.DataAccess/
     ├── NeighborhoodRepository.cs
     ├── ProvinceRepository.cs
     └── ReminderRepository.cs
+```
 
-================================================================================
-SiGeP.Business  -  Reglas de negocio
-================================================================================
+## SiGeP.Business — Reglas de negocio
+
+```
 SiGeP.Business/
 ├── SiGeP.Business.csproj
 ├── Base/
@@ -133,10 +136,11 @@ SiGeP.Business/
 ├── NeighborhoodBusiness.cs
 ├── ProvinceBusiness.cs
 └── ReminderBusiness.cs
+```
 
-================================================================================
-SiGeP.API  -  API REST (ASP.NET Core, JWT, AutoMapper, Serilog)
-================================================================================
+## SiGeP.API — API REST (ASP.NET Core, JWT, AutoMapper, Serilog)
+
+```
 SiGeP.API/
 ├── SiGeP.API.csproj / .csproj.user
 ├── Program.cs                       Punto de entrada, pipeline de la app
@@ -183,10 +187,11 @@ SiGeP.API/
 │
 ├── appsettings.json
 └── appsettings.Development.json
+```
 
-================================================================================
-SiGeP.UI  -  Frontend Blazor Server (Syncfusion, Identity, FluentValidation)
-================================================================================
+## SiGeP.UI — Frontend Blazor Server (Syncfusion, Identity, FluentValidation)
+
+```
 SiGeP.UI/
 ├── SiGeP.UI.csproj / .csproj.user
 ├── Program.cs
@@ -251,15 +256,16 @@ SiGeP.UI/
     ├── css/                                 Bootstrap, Syncfusion, FontAwesome, site.css
     ├── images/
     └── scripts/scripts.js
+```
 
-================================================================================
-RESUMEN POR CAPA
-================================================================================
-Model        Entidades, DTOs, DbContext (EF Core 8)
-DataAccess   Repository + Unit of Work
-Business     Reglas de negocio, validaciones, patron Observer
-API          Controladores REST, JWT, AutoMapper, Serilog
-UI           Blazor Server, Syncfusion, Identity, FluentValidation
+## Resumen por capa
 
-Para el detalle de responsabilidades de cada capa y el flujo a seguir al agregar
-una nueva entidad al sistema, ver ReadmeArquitecture.md en la raiz del proyecto.
+| Capa | Responsabilidad |
+|---|---|
+| **Model** | Entidades, DTOs, DbContext (EF Core 8) |
+| **DataAccess** | Repository + Unit of Work |
+| **Business** | Reglas de negocio, validaciones, patrón Observer |
+| **API** | Controladores REST, JWT, AutoMapper, Serilog |
+| **UI** | Blazor Server, Syncfusion, Identity, FluentValidation |
+
+Para el detalle de responsabilidades de cada capa y el flujo a seguir al agregar una nueva entidad al sistema, ver `ReadmeArquitecture.md` en la raíz del proyecto.
