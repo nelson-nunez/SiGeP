@@ -81,9 +81,6 @@ dotnet ef database update          --project SiGeP.Model --startup-project SiGeP
 ```
 </details>
 
-## ➕ Agregar una entidad nueva
-
-Seguí la checklist end-to-end (entidad → DTO → repositorio → business → controller → página Blazor) de la [guía de arquitectura](SiGeP/Guia%20Desarrollo/ReadmeArquitecture.md).
 
 ## 📚 Documentación
 
@@ -94,19 +91,3 @@ Seguí la checklist end-to-end (entidad → DTO → repositorio → business →
 | [Bitácora API](SiGeP/Documentacion/Readme.md) | Pasos de alta: EF Core, UnitOfWork, AutoMapper, JWT, Serilog. |
 | [Bitácora UI](SiGeP/Documentacion/Readme.UI.md) | Blazor Server, Syncfusion, Identity, FluentValidation. |
 | [Angular (idea)](SiGeP/Documentacion/Angular.md) | Notas sobre un frontend alternativo, no implementado. |
-
-## ⚠️ Estado y límites conocidos
-
-Proyecto en desarrollo; antes de usarlo en producción tené en cuenta:
-
-- [ ] `[Authorize]` está comentado en los controllers de negocio: hoy ningún endpoint de datos exige token.
-- [ ] Las contraseñas de `AppUser` se comparan en texto plano (sin hash).
-- [ ] Credenciales de SQL Server y `JwtTokenConfig:Secret` están versionadas en `appsettings.json`: rotarlas y moverlas a user-secrets.
-- [ ] No hay proyecto de tests automatizados.
-- [ ] `ABMComponent` / `CustomerCRUD` aún no son un CRUD funcional de pacientes.
-
-Detalle y checklist de seguridad en la [guía de arquitectura](SiGeP/Guia%20Desarrollo/ReadmeArquitecture.md).
-
-## 📄 Licencia
-
-TODO: definir licencia (no hay archivo `LICENSE` en el repositorio).
